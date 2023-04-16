@@ -1,0 +1,20 @@
+#pragma once
+
+// Parent Processor class
+class Processor {
+protected:
+    int ProcessorID;
+
+public:
+    Processor(int n) {
+        ProcessorID = n;
+    }
+
+    virtual void ScheduleAlgo() = 0; // pure virtual function
+
+    virtual void add_process(Process* p) = 0;
+
+    virtual void remove_process(Process* p) = 0;
+
+
+};
