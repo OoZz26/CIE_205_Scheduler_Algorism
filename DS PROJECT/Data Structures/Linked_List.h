@@ -39,7 +39,12 @@ public:
 
 	Node<T>* getNext() const
 	{
-		return next;
+		if(next){ return next; }
+		else
+		{
+			return NULL;
+		}
+		
 	}
 }; // end Node
 
@@ -67,6 +72,17 @@ public:
 	* Function: PrintList.
 	* prints the values of all nodes in a linked list.
 	*/
+	bool ISEMPTY() {
+		if (Head == nullptr) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	T Front() {
+		return Head->getItem();
+	}
 	void PrintList()	const
 	{
 		cout << "\nprinting list contents:\n\n";
@@ -119,19 +135,26 @@ public:
 	//inserts a new node at end if the list
 	void InsertEnd(T newitem)
 	{
-		Node<T>* P = Head;
-		Node<T>* NewNode = new Node<T>(newitem);
-		NewNode->setItem(newitem);
-		while (P->getNext() != NULL)
-		{
-			P = P->getNext();
+		Node<T>* newNode = new Node<T>(newitem);
+		newNode->setItem(newitem);
+		if (ISEMPTY()) {
+			Head = newNode;
 		}
+		else
+		{
+			Node<T>* P = Head;
+			while (P->getNext() != NULL)
+			{
+				P = P->getNext();
+			}
 
-		P->setNext(NewNode);
+			P->setNext(newNode);
 
 
-		NewNode->setNext(NULL);
-
+			newNode->setNext(NULL);
+			delete P;
+		}
+		
 	}
 
 	//[2]Find 
@@ -178,10 +201,15 @@ public:
 
 	void DeleteFirst()
 	{
-		Node<T>* delptr;
-		delptr = Head;
-		Head = Head->getNext();
-		delete delptr;
+		if(Head->getNext()){ 
+			Node<T>* delptr;
+			delptr = Head;
+			Head = Head->getNext(); 
+			delete delptr;
+		}
+		else {
+			return;
+		}
 	}
 
 	//[5] DeleteLast

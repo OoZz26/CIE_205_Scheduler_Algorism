@@ -24,6 +24,15 @@
     <ClCompile Include="RR_processor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FCFS_processor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SJF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data Structures\Linked_List.h">
@@ -39,6 +48,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RR_processor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FCFS_processor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SJF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PRIORITY_QUEUE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

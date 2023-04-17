@@ -3,12 +3,14 @@
 #include"Data Structures/QUEUE.h"
 #include"Process/Process.h"
 #include"RR_processor.h"
+#include"FCFS_processor.h"
+#include"PRIORITY_QUEUE.h"
 using namespace std;
 int main() {
     int num_processes;
     cout << "Enter the number of processes: ";
     cin >> num_processes;
-
+    PriorityQueue p1;
     Process* processes = new Process[num_processes];
 
     for (int i = 0; i < num_processes; i++) {
@@ -42,13 +44,19 @@ int main() {
         processes[i].set_id(pid);
         processes[i].set_cpu_time(cpu_time);
         processes[i].set_io(io_requests);
-
+        p1.enqueue(&processes[i]);
     }
-
-    RR_processor r1(5, 6);
-    r1.add_process(processes);
-    r1.ScheduleAlgo();
+    p1.Display();
+    
+    
+    
+    //FCFS_processor F1(4);
+    //RR_processor R1(5, 8);
+    //R1.add_process(processes);
+    //R1.ScheduleAlgo();
+    //F1.add_process(processes);
+    //F1.ScheduleAlgo();
     //
-    delete[] processes;
+    //delete[] processes;
     return 0;
 }

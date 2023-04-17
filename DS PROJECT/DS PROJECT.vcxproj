@@ -130,15 +130,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DS PROJECT.cpp" />
+    <ClCompile Include="FCFS_processor.cpp" />
     <ClCompile Include="Process\Process.cpp" />
     <ClCompile Include="RR_processor.cpp" />
+    <ClCompile Include="SJF.cpp" />
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data Structures\Linked_List.h" />
     <ClInclude Include="Data Structures\QUEUE.h" />
+    <ClInclude Include="FCFS_processor.h" />
+    <ClInclude Include="PRIORITY_QUEUE.h" />
     <ClInclude Include="Processors\Processor.h" />
     <ClInclude Include="Process\Process.h" />
     <ClInclude Include="RR_processor.h" />
+    <ClInclude Include="SJF.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
