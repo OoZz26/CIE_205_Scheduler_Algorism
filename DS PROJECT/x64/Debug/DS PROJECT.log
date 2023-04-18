@@ -1,0 +1,3 @@
+﻿  SJF.cpp
+C:\Users\East-Sound\Documents\GitHub\CIE_205_Scheduler_Algorism\DS PROJECT\SJF.cpp(26,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  DS PROJECT.vcxproj -> C:\Users\East-Sound\Documents\GitHub\CIE_205_Scheduler_Algorism\x64\Debug\DS PROJECT.exe

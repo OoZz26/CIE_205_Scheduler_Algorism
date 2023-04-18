@@ -3,47 +3,79 @@
 RR_processor::RR_processor(int id, int T_s) : Processor(id)
 {
 	Time_Slice = T_s;
+	run = nullptr;
+	counter = 0;
 }
 
 void RR_processor::add_process(Process* p)
 {
+	counter++;
+
+	//if (RRqueue.IsEmpty()&& counter==1) {
+	//	run = p;
+	//	RRqueue.EnQueue(p);
+	//}
+	//else{ RRqueue.EnQueue(p); }
 	RRqueue.EnQueue(p);
+
+
 }
 
 void RR_processor::remove_process(Process* p)
 {
+	counter--;
 }
 
 void RR_processor::ScheduleAlgo()
 {
-	if (RRqueue.IsEmpty()) {
-		cout << "there no process";
+	if (counter == 0) {
+		cout << "mmmmmm" << endl;
 	}
 	else {
-		cout << "oooooooooooooooo"<<endl;
-		srand(time(0));
-		int val = 1 + rand() % (35 - 1 + 1);
-		Process* Fork = RRqueue.FRONT();
-		RRqueue.DeQueue();
-		if (val >= 1 && val <= 15)
-		{
-			cout << "move to block list"<< endl;
-			cout << val;
-			//move to block list
+		cout << "--------------------------------------------" << endl;
+		if (IS_IDLE() == true) {
+
+			cout << "--------------------///////////------------------------" << endl;
+			srand(time(0));
+			int val = 1 + rand() % (35 - 1 + 1);
+			run = RRqueue.FRONT();
+			RRqueue.DeQueue();
+			counter--;
+			if (val >= 1 && val <= 15)
+			{
+				cout << "move to block list" << endl;
+				cout << val;
+				run = nullptr;
+				//ScheduleAlgo();
+				//move to block list
+
+			}
+			else {
+				if (val > 15 && val <= 25) {
+					add_process(run);
+					cout << "DDF" << endl;
+					counter++;
+					cout << val;
+					run = nullptr;
+					//ScheduleAlgo();
+				}
+				else {
+					//add to terminated list
+					cout << "/add to terminated list" << endl;
+					cout << val;
+					run = nullptr;
+					//ScheduleAlgo();
+				}
+			}
 
 		}
 		else {
-			if (val > 15 && val <= 25) {
-				add_process(Fork);
-				cout << "DDF" << endl;
-				cout << val;
-			}
-			else {
-				//add to terminated list
-				cout << "/add to terminated list" << endl;
-				cout << val;
-			}
+			//IS_IDLE();
+			cout << "not Idle or empty" << endl;
 		}
+	}
+
+
 
 
 	//	if (Fork->get_cpu_time() == 0) {
@@ -73,5 +105,19 @@ void RR_processor::ScheduleAlgo()
 	//			ScheduleAlgo();
 	//		}
 	//	}
+
+}
+bool RR_processor::IS_IDLE()
+{
+	if (run) {
+		cout << "false i" << endl;
+		return false;
+
 	}
+	else {
+		cout << "true i" << endl;
+		return true;
+
+	}
+
 }
