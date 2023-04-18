@@ -39,12 +39,7 @@ public:
 
 	Node<T>* getNext() const
 	{
-		if(next){ return next; }
-		else
-		{
-			return NULL;
-		}
-		
+		 return next; 
 	}
 }; // end Node
 

@@ -1,9 +1,9 @@
+#pragma once
 #include "UI.h"
 #include <iostream>
 #include "Process/Process.h" // assuming you have a separate header file for your process class
 #include "Processors/Processor.h" // assuming you have a separate header file for your processor class
 #include "Data Structures/Linked_List.h"
-#include "Scheduler.h"
 #include "Data Structures/QUEUE.h"
 
 using namespace std;
@@ -13,35 +13,35 @@ void UI::input() {
     cin.ignore();
 }
 
-void UI::output(Scheduler* sched)
-{   cout << "Current Timestep: " << sch-> << endl;
-    cout << "------------------------- RDY Processes ---------------------------" << endl;
-
-    // Print ready processes for each processor
-    Queue<Processor*> plist = sched->GetProcessorList();
-
-    
-        Node1<Processor*>* temp = plist.GetFront();
-        int c = 1;
-        while (temp != nullptr)
-        {
-            cout << "Processor " << c << " [" << temp->get_scheduler_name() << "]: " << ;
-
-            Processor* P = temp->GetItem();
-
-            Node1<Process*>* B = blklist.GetFront();
-            cout << blklist.Count() << "BLK: ";
-            while (B != nullptr)
-            {
-                cout << B->GetItem()->get_pid() << ", ";
-                B = B->getNext();
-            }
-            
-
-            cout << temp->GetItem(). << " ";
-            temp = temp->getNext();
-        }
-        cout << endl;
+void UI::output(Scheduler* sched){
+//{   cout << "Current Timestep: " << sch-> << endl;
+//    cout << "------------------------- RDY Processes ---------------------------" << endl;
+//
+//    // Print ready processes for each processor
+//    Queue<Processor*> plist = sched->GetProcessorList();
+//
+//    
+//        Node1<Processor*>* temp = plist.GetFront();
+//        int c = 1;
+//        while (temp != nullptr)
+//        {
+//            cout << "Processor " << c << " [" << temp->get_scheduler_name() << "]: " << ;
+//
+//            Processor* P = temp->GetItem();
+//
+//            Node1<Process*>* B = blklist.GetFront();
+//            cout << blklist.Count() << "BLK: ";
+//            while (B != nullptr)
+//            {
+//                cout << B->GetItem()->get_pid() << ", ";
+//                B = B->getNext();
+//            }
+//            
+//
+//            cout << temp->GetItem(). << " ";
+//            temp = temp->getNext();
+//        }
+//        cout << endl;
     
 
 
@@ -75,14 +75,14 @@ void UI::output(Scheduler* sched)
     
 
     // Print running processes
-    cout << "RUN processes" << endl;
+   /* cout << "RUN processes" << endl;
     cout << running_list->size() << " RUN: ";
     curr = running_list->get_head();
     while (curr != nullptr) {
         cout << curr->get_data().get_id() << " (P" << curr->get_data().get_priority() << "), ";
         curr = curr->get_next();
     }
-    cout << endl;
+    cout << endl;*/
 
     // Print terminated processes
     cout << "------------------ TRM processes -----------------" << endl;
@@ -98,7 +98,7 @@ void UI::output(Scheduler* sched)
     }
     cout << endl;
 
-    input();
+  
 }
 
 

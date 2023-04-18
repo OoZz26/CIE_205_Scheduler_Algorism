@@ -16,7 +16,7 @@ void RR_processor::add_process(Process* p)
 	//	RRqueue.EnQueue(p);
 	//}
 	//else{ RRqueue.EnQueue(p); }
-	RRqueue.EnQueue(p);
+	RRqueue.Enqueue(p);
 
 
 }
@@ -38,8 +38,8 @@ void RR_processor::ScheduleAlgo()
 			cout << "--------------------///////////------------------------" << endl;
 			srand(time(0));
 			int val = 1 + rand() % (35 - 1 + 1);
-			run = RRqueue.FRONT();
-			RRqueue.DeQueue();
+			
+			RRqueue.Dequeue(run);
 			counter--;
 			if (val >= 1 && val <= 15)
 			{

@@ -58,14 +58,14 @@ void Scheduler::LoadData(string filename)
 							for (int i = 0; i < N; i++)
 							{
 								Myfile >> x ;
-								Pairs_of_io.EnQueue(x);
+								Pairs_of_io.Enqueue(x);
 								
 							}
 						}
 						
 						
 						Process* Processes = new Process(AT, PID, CT,N);
-						New_Process_List.EnQueue(Processes);
+						New_Process_List.Enqueue(Processes);
 						currenLine += 1;
 						
 					}
@@ -82,7 +82,7 @@ void Scheduler::LoadData(string filename)
 					SIGKILL S;
 					S.SKPID = SPID;
 					S.ST = T;
-					Signal_Kill_List.EnQueue(S);
+					Signal_Kill_List.Enqueue(S);
 					noOf_Signal_Kill += 1;
 					
 				}
@@ -101,19 +101,19 @@ void Scheduler::LoadData(string filename)
 	{
 		FCFS_processor* P = new FCFS_processor(counter_noOf_FCFS);
 		counter_noOf_FCFS += 1;
-		Processors_List.EnQueue(P);
+		Processors_List.Enqueue(P);
 	}
 	for (int i = 0; i < noOF_SJF; i++)
 	{
 		SJF_processor* P = new SJF_processor(counter_noOf_SJF);
 		counter_noOf_SJF += 1;
-		Processors_List.EnQueue(P);
+		Processors_List.Enqueue(P);
 	}
 	for (int i = 0; i < noOF_RR; i++)
 	{
 		RR_processor* R = new RR_processor(counter_noOf_RR, Timeslice);
 		counter_noOf_RR += 1;
-		Processors_List.EnQueue(R);
+		Processors_List.Enqueue(R);
 	}
 	
 	
@@ -123,8 +123,8 @@ void Scheduler::Dispaly_New_Process_List()
 	for (int i = 0; i < NumofProcess; i++)
 	{
 
-		Process* P = New_Process_List.FRONT();
-		New_Process_List.DeQueue();
+		Process* P;
+		New_Process_List.Dequeue(P);
 		cout<< "arrival time is" << " " << P->get_arrival_time() << endl;
 		cout <<"PID is" << " " << P->get_pid() << endl;
 		cout << "CPU Time is" << " " << P->get_cpu_time() << endl;
@@ -160,11 +160,11 @@ void Scheduler::Display_input_file_Data()
 
 void Scheduler:: Add_to_BLK(Process* p)
 {
-	BLK_Process_List.EnQueue(p);
+	BLK_Process_List.Enqueue(p);
 }
 void Scheduler::Add_to_TRM(Process* p)
 {
-	TRM_Process_List.EnQueue(p);
+	TRM_Process_List.Enqueue(p);
 
 }
 
