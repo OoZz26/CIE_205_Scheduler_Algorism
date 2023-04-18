@@ -136,6 +136,7 @@
     <ClCompile Include="Scheduler.cpp" />
     <ClCompile Include="SJF.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data Structures\Linked_List.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Scheduler.h" />
     <ClInclude Include="SJF.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test1.txt" />

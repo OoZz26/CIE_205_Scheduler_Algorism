@@ -16,23 +16,23 @@ void Scheduler::LoadData(string filename)
 
 		while (!Myfile.eof())
 		{
-			if (currenLine = 1)
+			if (currenLine == 1)
 			{
 				Myfile >> noOf_FCFS >> noOF_SJF >> noOF_RR;
 				currenLine += 1;
 				
 			}
-			if (currenLine = 2)
+			if (currenLine == 2)
 			{
 				Myfile >> Timeslice;
 				currenLine += 1;
 			}
-			if (currenLine = 3)
+			if (currenLine == 3)
 			{
 				Myfile >> RTF >> MaxW >> STL >> ForkPROB;
 				currenLine += 1;
 			}
-			if (currenLine = 4)
+			if (currenLine == 4)
 			{
 				Myfile >> NumofProcess;
 				currenLine += 1;
@@ -149,6 +149,21 @@ void Scheduler::Add_to_TRM(Process* p)
 {
 	TRM_Process_List.EnQueue(p);
 
+}
+
+Queue<Processor*> Scheduler::GetProcessorList() const
+{
+	return Processors_List;
+}
+
+Queue<Process*> Scheduler::GetBLKList() const
+{
+	return BLK_Process_List;
+}
+
+Queue<Process*> Scheduler::GetTRMList() const
+{
+	return TRM_Process_List;
 }
 
 
