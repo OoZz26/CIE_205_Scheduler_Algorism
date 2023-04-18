@@ -19,11 +19,14 @@ private:
     int io_request_number;
     int io_request_time;
     int io_duration;
+    //int io_request_number;
     vector<pair<int, int>> io_requests;
     enum State { NEW, READY, RUNNING, BLOCKED, TERMINATED, ORPHAN };
     State state;
 public:
     Process(int arrival_time, int pid, int cpu_time, const vector<pair<int, int>>& io_requests);
+    Process(int arrival_time, int pid, int cpu_time, int io_request_number);
+    
     Process();
     // Getters
     int get_pid();

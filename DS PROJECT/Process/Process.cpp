@@ -7,6 +7,15 @@ Process::Process(int arrival_time, int pid, int cpu_time, const vector<pair<int,
     this->io_requests = io_requests;
     this->state = NEW;
 }
+Process::Process(int arrival_time, int pid, int cpu_time,int  io_request_number)
+{
+    this->pid = pid;
+    this->arrival_time = arrival_time;
+    this->cpu_time = cpu_time;
+    this->io_request_number = io_request_number;
+}
+
+
 Process::Process()
 {   
     //this->pid = 0;

@@ -43,11 +43,11 @@ template <typename T>
 class Queue
 {
 private:
-	Node1<T>* Front;
+	//Node1<T>* Front;
 	Node1<T>* Rear;
 public:
 
-
+	Node1<T>* Front;
 	Queue()
 	{
 		Front = nullptr;
@@ -103,6 +103,7 @@ public:
 			delete delptr;
 		}
 	}
+
 	void Display()
 	{
 		Node1<T>* temp = Front;

@@ -5,6 +5,11 @@
 #include"RR_processor.h"
 #include"FCFS_processor.h"
 #include"PRIORITY_QUEUE.h"
+#include"Scheduler.h"
+#include <iostream>
+#include<fstream>
+#include<string>
+#include <sstream>
 using namespace std;
 int main() {
     int num_processes;
@@ -50,13 +55,18 @@ int main() {
     
     
     
-    //FCFS_processor F1(4);
-    //RR_processor R1(5, 8);
-    //R1.add_process(processes);
-    //R1.ScheduleAlgo();
-    //F1.add_process(processes);
-    //F1.ScheduleAlgo();
-    //
+    FCFS_processor F1(4);
+    RR_processor R1(5, 8);
+    R1.add_process(processes);
+    R1.ScheduleAlgo();
+    F1.add_process(processes);
+    F1.ScheduleAlgo();
+    Scheduler S1;
+    S1.LoadData("Test1.txt");
+    
     //delete[] processes;
     return 0;
+    
+
+
 }

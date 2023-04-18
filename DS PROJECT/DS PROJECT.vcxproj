@@ -133,6 +133,7 @@
     <ClCompile Include="FCFS_processor.cpp" />
     <ClCompile Include="Process\Process.cpp" />
     <ClCompile Include="RR_processor.cpp" />
+    <ClCompile Include="Scheduler.cpp" />
     <ClCompile Include="SJF.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
@@ -144,8 +145,12 @@
     <ClInclude Include="Processors\Processor.h" />
     <ClInclude Include="Process\Process.h" />
     <ClInclude Include="RR_processor.h" />
+    <ClInclude Include="Scheduler.h" />
     <ClInclude Include="SJF.h" />
     <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Test1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
