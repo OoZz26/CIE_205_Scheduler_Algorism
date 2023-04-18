@@ -5,12 +5,15 @@
 class SJF_processor :public Processor
 {
 private:
-	PriorityQueue<Process*> SJF_LInkedlist;
+	PriorityQueue SJF_Pqueue;
+	Process* run;
+	int counter;
 public:
 	SJF_processor(int id);
 	void add_process(Process* p) override;
 	void remove_process(Process* p) override;
 	void ScheduleAlgo() override;
+	int get_counter() const;
+	Process* get_run();
 
 };
-

@@ -20,6 +20,11 @@ private:
 	Queue<Process*> TRM_Process_List;
 	Queue<int>Signal_Kill_List;
 public:
+	struct io_request {
+		int io_duration;
+		int io_request_time;
+	};
+	Queue<string> Pairs_of_io;
 	Scheduler();
 	int noOf_Signal_Kill=0;
 	int noOf_FCFS, noOF_SJF, noOF_RR;

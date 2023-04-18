@@ -4,8 +4,8 @@
 #include"Process/Process.h"
 #include"RR_processor.h"
 #include"FCFS_processor.h"
-#include"PRIORITY_QUEUE.h"
 #include"Scheduler.h"
+#include "SJF.h"
 #include <iostream>
 #include<fstream>
 #include<string>

@@ -5,6 +5,7 @@ Scheduler::Scheduler()
 }
 void Scheduler::LoadData(string filename)
 {
+	
 	int counter_noOf_FCFS = 1;
 	int counter_noOf_SJF = 1;
 	int counter_noOf_RR = 1;
@@ -16,23 +17,23 @@ void Scheduler::LoadData(string filename)
 
 		while (!Myfile.eof())
 		{
-			if (currenLine = 1)
+			if (currenLine == 1)
 			{
 				Myfile >> noOf_FCFS >> noOF_SJF >> noOF_RR;
 				currenLine += 1;
 				
 			}
-			if (currenLine = 2)
+			if (currenLine == 2)
 			{
 				Myfile >> Timeslice;
 				currenLine += 1;
 			}
-			if (currenLine = 3)
+			if (currenLine == 3)
 			{
 				Myfile >> RTF >> MaxW >> STL >> ForkPROB;
 				currenLine += 1;
 			}
-			if (currenLine = 4)
+			if (currenLine == 4)
 			{
 				Myfile >> NumofProcess;
 				currenLine += 1;
@@ -50,7 +51,19 @@ void Scheduler::LoadData(string filename)
 					}
 					else
 					{
+						string x;
 						Myfile >> AT >> PID >> CT >> N;
+						if (N > 0)
+						{
+							for (int i = 0; i < N; i++)
+							{
+								Myfile >> x ;
+								Pairs_of_io.EnQueue(x);
+								cout << x << endl;
+							}
+						}
+						
+						
 						Process* Processes = new Process(AT, PID, CT,N);
 						New_Process_List.EnQueue(Processes);
 						
@@ -150,5 +163,6 @@ void Scheduler::Add_to_TRM(Process* p)
 	TRM_Process_List.EnQueue(p);
 
 }
+
 
 
