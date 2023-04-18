@@ -67,7 +67,5 @@ int main() {
     S1.Display_input_file_Data();
     //delete[] processes;
     return 0;
-    
-
 
 }

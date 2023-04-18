@@ -1,7 +1,7 @@
 #include "Scheduler.h"
 Scheduler::Scheduler()
 {
-	
+
 }
 void Scheduler::LoadData(string filename)
 {
@@ -59,14 +59,13 @@ void Scheduler::LoadData(string filename)
 							{
 								Myfile >> x ;
 								Pairs_of_io.EnQueue(x);
-								cout << x << endl;
+								
 							}
 						}
 						
 						
 						Process* Processes = new Process(AT, PID, CT,N);
 						New_Process_List.EnQueue(Processes);
-						
 						currenLine += 1;
 						
 					}
@@ -80,8 +79,10 @@ void Scheduler::LoadData(string filename)
 				while (!Myfile.eof())
 				{
 					Myfile >> SPID >> T;
-					Signal_Kill_List.EnQueue(SPID);
-					Signal_Kill_List.EnQueue(T);
+					SIGKILL S;
+					S.SKPID = SPID;
+					S.ST = T;
+					Signal_Kill_List.EnQueue(S);
 					noOf_Signal_Kill += 1;
 					
 				}
@@ -104,7 +105,9 @@ void Scheduler::LoadData(string filename)
 	}
 	for (int i = 0; i < noOF_SJF; i++)
 	{
-
+		SJF_processor* P = new SJF_processor(counter_noOf_SJF);
+		counter_noOf_SJF += 1;
+		Processors_List.EnQueue(P);
 	}
 	for (int i = 0; i < noOF_RR; i++)
 	{
@@ -112,6 +115,7 @@ void Scheduler::LoadData(string filename)
 		counter_noOf_RR += 1;
 		Processors_List.EnQueue(R);
 	}
+	
 	
 }
 void Scheduler::Dispaly_New_Process_List()
@@ -163,6 +167,4 @@ void Scheduler::Add_to_TRM(Process* p)
 	TRM_Process_List.EnQueue(p);
 
 }
-
-
 
