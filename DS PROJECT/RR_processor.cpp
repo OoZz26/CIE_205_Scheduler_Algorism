@@ -2,7 +2,7 @@
 
 RR_processor::RR_processor(int id, int T_s) : Processor(id)
 {
-
+	type = "RR_processor";
 	Time_Slice = T_s;
 	run = nullptr;
 	counter = 0;
@@ -123,4 +123,19 @@ bool RR_processor::IS_IDLE()
 
 	}
 
+}
+
+Queue<Process*> RR_processor::get_ready()
+{
+	return RRqueue;
+}
+
+string RR_processor::Processor_Type()
+{
+	return type;
+}
+
+Process* RR_processor::get_run()
+{
+	return run;
 }

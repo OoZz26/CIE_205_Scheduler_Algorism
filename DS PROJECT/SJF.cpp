@@ -1,6 +1,7 @@
 #include "SJF.h"
 SJF_processor::SJF_processor(int id) :Processor(id)
 {
+	type = "SJF_processor";
 	run = nullptr;
 	counter = 0;
 }
@@ -88,5 +89,15 @@ int SJF_processor::get_counter() const
 Process* SJF_processor::get_run()
 {
 	return run;
+}
+
+PriorityQueue SJF_processor::get_ready()
+{
+	return SJF_Pqueue;
+}
+
+string SJF_processor::Processor_Type()
+{
+	return type;
 }
 

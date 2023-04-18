@@ -18,5 +18,8 @@ public:
 	void remove_process(Process* p) override;
 	void ScheduleAlgo() override;
 	bool IS_IDLE() override;
+	Queue< Process*>  get_ready();
+	string Processor_Type() override;
+	Process* get_run() override;
 };
 

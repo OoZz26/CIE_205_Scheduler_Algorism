@@ -1,7 +1,9 @@
 #include "FCFS_processor.h"
 
 FCFS_processor::FCFS_processor(int id) :Processor(id)
-{}
+{
+	type = "FCFS_processor";
+}
 
 void FCFS_processor::add_process(Process* p)
 {
@@ -104,6 +106,16 @@ bool FCFS_processor::IS_IDLE()
 int FCFS_processor::get_counter() const
 {
 	return counter;
+}
+
+string FCFS_processor::Processor_Type()
+{
+	return type;
+}
+
+LinkedList<Process*> FCFS_processor::get_ready()
+{
+	return FCFS_linked_list;
 }
 
 Process* FCFS_processor::get_run()

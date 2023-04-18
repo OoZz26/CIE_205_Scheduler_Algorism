@@ -16,6 +16,8 @@ public:
 	void ScheduleAlgo() override;
 	bool IS_IDLE() override;
 	int get_counter() const;
-	Process* get_run();
+	string Processor_Type() override;
+	LinkedList<Process*> get_ready();
+	Process* get_run() override;
 };
 
