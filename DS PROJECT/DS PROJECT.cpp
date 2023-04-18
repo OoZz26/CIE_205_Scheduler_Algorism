@@ -4,8 +4,8 @@
 #include"Process/Process.h"
 #include"RR_processor.h"
 #include"FCFS_processor.h"
-#include"PRIORITY_QUEUE.h"
 #include"Scheduler.h"
+#include "SJF.h"
 #include <iostream>
 #include<fstream>
 #include<string>
@@ -67,7 +67,5 @@ int main() {
     S1.Display_input_file_Data();
     //delete[] processes;
     return 0;
-    
-
 
 }

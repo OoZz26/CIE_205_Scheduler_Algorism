@@ -18,6 +18,8 @@ public:
 
     virtual void add_process(Process* p) = 0;
 
+    virtual bool IS_IDLE() = 0;
+
     virtual void remove_process(Process* p) = 0;
 
 

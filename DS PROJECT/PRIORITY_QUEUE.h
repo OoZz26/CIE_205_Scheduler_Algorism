@@ -1,3 +1,4 @@
+#pragma once
 #include"Process/Process.h"
 
 class Node2
