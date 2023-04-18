@@ -12,7 +12,7 @@
 #include <sstream>
 using namespace std;
 int main() {
-    int num_processes;
+    /*int num_processes;
     cout << "Enter the number of processes: ";
     cin >> num_processes;
     PriorityQueue p1;
@@ -60,10 +60,11 @@ int main() {
     R1.add_process(processes);
     R1.ScheduleAlgo();
     F1.add_process(processes);
-    F1.ScheduleAlgo();
+    F1.ScheduleAlgo();*/
     Scheduler S1;
     S1.LoadData("Test1.txt");
-    
+    S1.Dispaly_New_Process_List();
+    S1.Display_input_file_Data();
     //delete[] processes;
     return 0;
     

@@ -25,7 +25,7 @@ void Scheduler::LoadData(string filename)
 			}
 			if (currenLine = 3)
 			{
-				Myfile >> RTF >> Timeslice >> STL >> ForkPROB;
+				Myfile >> RTF >> MaxW >> STL >> ForkPROB;
 				currenLine += 1;
 			}
 			if (currenLine = 4)
@@ -65,6 +65,7 @@ void Scheduler::LoadData(string filename)
 					Myfile >> SPID >> T;
 					Signal_Kill_List.EnQueue(SPID);
 					Signal_Kill_List.EnQueue(T);
+					noOf_Signal_Kill += 1;
 					
 				}
 
@@ -96,8 +97,44 @@ void Scheduler::LoadData(string filename)
 	}
 	
 }
+void Scheduler::Dispaly_New_Process_List()
+{
+	for (int i = 0; i < NumofProcess; i++)
+	{
 
+		Process* P = New_Process_List.FRONT();
+		New_Process_List.DeQueue();
+		cout<< "arrival time is" << " " << P->get_arrival_time() << endl;
+		cout <<"PID is" << " " << P->get_pid() << endl;
+		cout << "CPU Time is" << " " << P->get_cpu_time() << endl;
+		cout <<"no of io req is" << " " << P->get_io_request_number() << endl;
+		cout << "------------------------------------------------------"<<endl;
+	}
+	
+	
+}
 
-
+void Scheduler::Display_input_file_Data()
+{
+	cout << "noOf_FCFS is" << " " << noOf_FCFS<< endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "noOF_SJF is" << " " << noOF_SJF  << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "noOF_RR is" << " " << noOF_RR  << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "Timeslice is" << " " << Timeslice << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "RTF is" << " " << RTF  << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "MaxW is" << " " << MaxW  << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "STL is" << " " << STL << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "ForkPROB is" << " " << ForkPROB << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "NumofProcess is" << " " << NumofProcess  << endl;
+	cout << "------------------------------------------------------" << endl;
+	cout << "noOf_Signal_Kill is" << " " << noOf_Signal_Kill  << endl;
+}
 
 

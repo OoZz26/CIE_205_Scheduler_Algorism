@@ -20,6 +20,7 @@ private:
 	Queue<Process*> TRM_Process_List;
 	Queue<int>Signal_Kill_List;
 public:
+	int noOf_Signal_Kill=0;
 	int noOf_FCFS, noOF_SJF, noOF_RR;
 	int AT, PID, CT, N;
 	int NumofProcess;
@@ -27,5 +28,7 @@ public:
 	int RTF, MaxW, STL, ForkPROB;
 	int SPID, T;
 	void LoadData(string filename);
+	void Dispaly_New_Process_List();
+	void Display_input_file_Data();
 };
 
