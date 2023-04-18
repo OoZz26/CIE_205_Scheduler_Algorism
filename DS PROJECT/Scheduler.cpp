@@ -1,7 +1,7 @@
 #include "Scheduler.h"
 Scheduler::Scheduler()
 {
-
+	t_Step = 0;
 }
 void Scheduler::LoadData(string filename)
 {
@@ -181,5 +181,10 @@ Queue<Process*> Scheduler::GetBLKList() const
 Queue<Process*> Scheduler::GetTRMList() const
 {
 	return TRM_Process_List;
+}
+
+int Scheduler::GettimeStep()
+{
+	return t_Step;
 }
 

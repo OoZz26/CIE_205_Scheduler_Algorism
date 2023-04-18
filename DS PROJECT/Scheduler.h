@@ -27,6 +27,7 @@ private:
 	Queue< SIGKILL> Signal_Kill_List;
 	Queue<string> Pairs_of_io;
 	Queue<int>List;
+	int t_Step;
 	
 public:
 
@@ -46,6 +47,7 @@ public:
 	Queue<Processor*> GetProcessorList() const;
 	Queue<Process*> GetBLKList()const;
 	Queue<Process*> GetTRMList() const;
+	int GettimeStep();
 
 };
 
