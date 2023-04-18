@@ -1,4 +1,8 @@
 #include "Scheduler.h"
+Scheduler::Scheduler()
+{
+	
+}
 void Scheduler::LoadData(string filename)
 {
 	int counter_noOf_FCFS = 1;
@@ -135,6 +139,16 @@ void Scheduler::Display_input_file_Data()
 	cout << "NumofProcess is" << " " << NumofProcess  << endl;
 	cout << "------------------------------------------------------" << endl;
 	cout << "noOf_Signal_Kill is" << " " << noOf_Signal_Kill  << endl;
+}
+
+void Scheduler:: Add_to_BLK(Process* p)
+{
+	BLK_Process_List.EnQueue(p);
+}
+void Scheduler::Add_to_TRM(Process* p)
+{
+	TRM_Process_List.EnQueue(p);
+
 }
 
 

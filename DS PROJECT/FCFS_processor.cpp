@@ -27,6 +27,10 @@ void FCFS_processor::ScheduleAlgo()
 		{
 			cout << "move to block list" << endl;
 			cout << val;
+			Scheduler S;
+			S.Add_to_BLK(Fork);
+
+			
 			//move to block list
 
 		}

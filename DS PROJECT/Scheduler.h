@@ -20,6 +20,7 @@ private:
 	Queue<Process*> TRM_Process_List;
 	Queue<int>Signal_Kill_List;
 public:
+	Scheduler();
 	int noOf_Signal_Kill=0;
 	int noOf_FCFS, noOF_SJF, noOF_RR;
 	int AT, PID, CT, N;
@@ -30,5 +31,8 @@ public:
 	void LoadData(string filename);
 	void Dispaly_New_Process_List();
 	void Display_input_file_Data();
+	void Add_to_BLK(Process* p);
+	void Add_to_TRM(Process* p);
+
 };
 

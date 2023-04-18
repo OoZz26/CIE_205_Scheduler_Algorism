@@ -2,6 +2,7 @@
 #include"Process/Process.h"
 #include"Processors/Processor.h"
 #include"Data Structures/Linked_List.h"
+#include"Scheduler.h"
 class FCFS_processor :public Processor
 {
 private:

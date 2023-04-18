@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include <time.h> // required for time
 #include <cstdlib> //required for srand and rand
+
+
 // Parent Processor class
 class Processor {
 protected:
