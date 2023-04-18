@@ -63,7 +63,7 @@ public:
         if (!head || task->get_cpu_time() < head->getItem()->get_cpu_time()) {
             new_task->setNext(head) ;
             head = new_task;
-            cout << "lol vv" << endl;
+
         }
         else {
             Node2* current = head;
@@ -72,21 +72,24 @@ public:
             }
             new_task->setNext(current->getNext()) ;
             current->setNext( new_task);
-            cout << "lol" << endl;
             
         }
     }
 
-    Process* dequeue() {
-        if (!head) {
-            // Handle empty queue
-            throw "Queue is empty"; 
-        }
-        Node2* removed_task = head;
+    bool dequeue(Process* frntEntry) {
+        if (IsEmpty())
+            return false;
+
+        Node2* nodeToDeletePtr = head;
+        frntEntry = head->getItem();
         head = head->getNext();
-        Process* task = removed_task->getItem();
-        delete removed_task;
-        return task;
+        // Queue is not empty; remove front
+        //if (nodeToDeletePtr == backPtr)  // Special case: last node in the queue
+        //    backPtr = nullptr;
+
+        // Free memory reserved for the dequeued node
+        delete nodeToDeletePtr;
+        return true;
     }
     bool IsEmpty()
     {

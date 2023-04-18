@@ -75,6 +75,11 @@ int Process::get_io_request_number()
     return io_request_number;
 }
 
+void Process::set_io_request_number(int io_request_numbers)
+{
+    io_request_number = io_request_numbers;
+}
+
 void Process::set_id(int id)
 {
     pid = id;

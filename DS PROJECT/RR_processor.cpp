@@ -2,6 +2,7 @@
 
 RR_processor::RR_processor(int id, int T_s) : Processor(id)
 {
+
 	Time_Slice = T_s;
 	run = nullptr;
 	counter = 0;
@@ -38,11 +39,13 @@ void RR_processor::ScheduleAlgo()
 			cout << "--------------------///////////------------------------" << endl;
 			srand(time(0));
 			int val = 1 + rand() % (35 - 1 + 1);
-			
+			cout << val << endl;
+
 			RRqueue.Dequeue(run);
 			counter--;
 			if (val >= 1 && val <= 15)
 			{
+
 				cout << "move to block list" << endl;
 				cout << val;
 				run = nullptr;
@@ -75,7 +78,7 @@ void RR_processor::ScheduleAlgo()
 		}
 	}
 
-
+}
 
 
 	//	if (Fork->get_cpu_time() == 0) {
@@ -106,7 +109,7 @@ void RR_processor::ScheduleAlgo()
 	//		}
 	//	}
 
-}
+
 bool RR_processor::IS_IDLE()
 {
 	if (run) {

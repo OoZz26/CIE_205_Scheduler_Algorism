@@ -46,6 +46,7 @@ public:
     State get_state();
     bool is_ready(Process* p);
     int get_io_request_number();
+    void set_io_request_number( int io_request_numbers);
     void set_id(int id);
     void set_arrival_time(int arrivalrime);
     void set_cpu_time(int ct);
