@@ -21,5 +21,6 @@ public:
 	Queue< Process*>  get_ready();
 	string Processor_Type() override;
 	Process* get_run() override;
+	void PrintReady() override;
 };
 

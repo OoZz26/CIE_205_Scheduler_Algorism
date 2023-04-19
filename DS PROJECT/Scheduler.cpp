@@ -1,4 +1,6 @@
+#pragma once
 #include "Scheduler.h"
+
 Scheduler::Scheduler()
 {
 	t_Step = 0;

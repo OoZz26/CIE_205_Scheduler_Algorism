@@ -123,3 +123,16 @@ Process* FCFS_processor::get_run()
 	return run;
 }
 
+void FCFS_processor::PrintReady()
+{
+
+	Node<Process*>* F = FCFS_linked_list.GetHead();
+	cout << FCFS_linked_list.GetCount() << " RDY: ";
+	while (F != nullptr)
+	{
+		cout << F->getItem()->get_pid() << ", ";
+		F = F->getNext();
+	}
+	cout << endl;
+}
+

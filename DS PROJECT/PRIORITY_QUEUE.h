@@ -55,8 +55,9 @@ public:
 class PriorityQueue {
     private:
     Node2* head;
+    int count;
 public:
-    PriorityQueue() : head(nullptr) {}
+    PriorityQueue() : head(nullptr) { count = 0; }
 
     void enqueue(Process* task) {
         Node2* new_task = new Node2(task);
@@ -74,7 +75,10 @@ public:
             current->setNext( new_task);
             
         }
+        count++;
     }
+    Node2* GetHead() { return head; }
+    int GetCount() { return count; }
 
     bool dequeue(Process* frntEntry) {
         if (IsEmpty())
@@ -90,6 +94,7 @@ public:
         // Free memory reserved for the dequeued node
         delete nodeToDeletePtr;
         return true;
+        count--;
     }
     bool IsEmpty()
     {

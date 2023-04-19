@@ -26,6 +26,8 @@ public:
     virtual string Processor_Type() = 0;
 
     virtual Process* get_run() = 0;
+    virtual void PrintReady() = 0;
+
 
     virtual void remove_process(Process* p) = 0;
 

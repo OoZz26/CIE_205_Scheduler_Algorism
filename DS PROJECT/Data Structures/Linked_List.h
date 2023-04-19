@@ -49,6 +49,7 @@ class LinkedList
 private:
 	Node<T>* Head;	//Pointer to the head of the list
 	Node<T>* Tail;
+	int count;
 	//You can add tail pointer too (depending on your problem)
 public:
 
@@ -57,6 +58,7 @@ public:
 	{
 		Head = nullptr;
 		Tail = nullptr;
+		count = 0;
 	}
 
 	//List is being desturcted ==> delete all items in the list
@@ -69,6 +71,11 @@ public:
 	* Function: PrintList.
 	* prints the values of all nodes in a linked list.
 	*/
+
+
+	Node<T>* GetHead() {
+		return Head;
+	}
 	bool ISEMPTY() {
 		if (Head == nullptr) {
 			return true;
@@ -106,6 +113,7 @@ public:
 		Node<T>* R = new Node<T>(data);
 		R->setNext(Head);
 		Head = R;
+		count++;
 	}
 
 	/*
@@ -121,6 +129,7 @@ public:
 			delete Head;
 			Head = P;
 		}
+		count = 0;
 	}
 
 	////////////////     Requirements   ///////////////////
@@ -151,6 +160,7 @@ public:
 			newNode->setNext(NULL);
 			delete P;
 		}
+		count++;
 		
 	}
 
@@ -203,6 +213,7 @@ public:
 			delptr = Head;
 			Head = Head->getNext(); 
 			delete delptr;
+			count--;
 		}
 		else {
 			return;
@@ -221,6 +232,7 @@ public:
 			delptr = delptr->getNext();
 		}
 		prev->setNext(NULL);
+		count--;
 
 		delete delptr;
 	}
@@ -270,6 +282,7 @@ public:
 			}
 			F = true;
 		}
+		count--;
 
 		return F;
 
@@ -301,7 +314,10 @@ public:
 		}
 
 
+
 	}
+
+	int GetCount() { return count; }
 
 	//[8]Merge
 	//Merges the current list to another list L by making the last Node in the current list 

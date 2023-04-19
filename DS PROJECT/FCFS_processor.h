@@ -19,5 +19,6 @@ public:
 	string Processor_Type() override;
 	LinkedList<Process*> get_ready();
 	Process* get_run() override;
+	void PrintReady() override;
 };
 

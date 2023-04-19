@@ -88,6 +88,10 @@ int SJF_processor::get_counter() const
 
 Process* SJF_processor::get_run()
 {
+	string SJF_processor::Processor_Type()
+	{
+		return string();
+	}
 	return run;
 }
 
@@ -99,5 +103,17 @@ PriorityQueue SJF_processor::get_ready()
 string SJF_processor::Processor_Type()
 {
 	return type;
+}
+
+void SJF_processor::PrintReady()
+{
+	Node2* R = SJF_Pqueue.GetHead();
+	cout << SJF_Pqueue.GetCount() << " RDY: ";
+	while (R != nullptr)
+	{
+		cout << R->getItem()->get_pid() << ", ";
+		R = R->getNext();
+	}
+	cout << endl;
 }
 

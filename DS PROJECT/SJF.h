@@ -19,6 +19,7 @@ public:
 	PriorityQueue  get_ready();
 
 	string Processor_Type() override;
+	void PrintReady() override;
 
 
 };

@@ -139,3 +139,15 @@ Process* RR_processor::get_run()
 {
 	return run;
 }
+
+void RR_processor::PrintReady()
+{
+	Node1<Process*>* R = RRqueue.GetFront();
+	cout << RRqueue.Count() << " RDY: ";
+	while (R != nullptr)
+	{
+		cout << R->GetItem()->get_pid() << ", ";
+		R = R->getNext();
+	}
+	cout << endl;
+}
