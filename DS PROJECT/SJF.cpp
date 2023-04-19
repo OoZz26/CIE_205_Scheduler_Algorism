@@ -88,10 +88,7 @@ int SJF_processor::get_counter() const
 
 Process* SJF_processor::get_run()
 {
-	string SJF_processor::Processor_Type()
-	{
-		return string();
-	}
+	
 	return run;
 }
 
