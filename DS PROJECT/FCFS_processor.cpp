@@ -1,9 +1,12 @@
 #include "FCFS_processor.h"
+#include"Scheduler.h"
 
-FCFS_processor::FCFS_processor(int id) :Processor(id)
+FCFS_processor::FCFS_processor(int id, Scheduler* s) :Processor(id,s)
 {
 	type = "FCFS_processor";
 }
+
+
 
 void FCFS_processor::add_process(Process* p)
 {

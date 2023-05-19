@@ -1,6 +1,6 @@
 #pragma once
 #include "Scheduler.h"
-
+#include"Processors/Processor.h"
 Scheduler::Scheduler()
 {
 	t_Step = 0;
@@ -101,19 +101,19 @@ void Scheduler::LoadData(string filename)
 	}
 	for (int i = 0; i < noOf_FCFS; i++)
 	{
-		FCFS_processor* P = new FCFS_processor(counter_noOf_FCFS);
+		FCFS_processor* P = new FCFS_processor(counter_noOf_FCFS,this);
 		counter_noOf_FCFS += 1;
 		Processors_List.Enqueue(P);
 	}
 	for (int i = 0; i < noOF_SJF; i++)
 	{
-		SJF_processor* P = new SJF_processor(counter_noOf_SJF);
+		SJF_processor* P = new SJF_processor(counter_noOf_SJF, this);
 		counter_noOf_SJF += 1;
 		Processors_List.Enqueue(P);
 	}
 	for (int i = 0; i < noOF_RR; i++)
 	{
-		RR_processor* R = new RR_processor(counter_noOf_RR, Timeslice);
+		RR_processor* R = new RR_processor(counter_noOf_RR,this ,Timeslice);
 		counter_noOf_RR += 1;
 		Processors_List.Enqueue(R);
 	}

@@ -2,15 +2,20 @@
 #include"Process/Process.h"
 #include"Processors/Processor.h"
 #include"Data Structures/Linked_List.h"
-#include"Scheduler.h"
+
+
+//class Scheduler;
 class FCFS_processor :public Processor
 {
 private:
+	 
 	Process* run;
 	int counter;
 	LinkedList<Process*> FCFS_linked_list;
 public:
-	FCFS_processor(int id);
+
+	FCFS_processor(int id, Scheduler* s);
+
 	void add_process(Process* p) override;
 	void remove_process(Process* p) override;
 	void ScheduleAlgo() override;

@@ -5,12 +5,14 @@
 #include"Process/Process.h"
 #include"RR_processor.h"
 #include"FCFS_processor.h"
-#include"Processors/Processor.h"
 #include "SJF.h"
 #include <iostream>
 #include<fstream>
 #include<string>
 #include <sstream>
+
+
+class Processor;
 using namespace std;
 class Scheduler
 {

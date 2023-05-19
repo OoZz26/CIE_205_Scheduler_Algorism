@@ -1,6 +1,8 @@
 #include "RR_processor.h"
+#include"Scheduler.h"
 
-RR_processor::RR_processor(int id, int T_s) : Processor(id)
+
+RR_processor::RR_processor(int id, Scheduler* s,int T_s) : Processor(id, s)
 {
 	type = "RR_processor";
 	Time_Slice = T_s;
@@ -29,54 +31,57 @@ void RR_processor::remove_process(Process* p)
 
 void RR_processor::ScheduleAlgo()
 {
-	if (counter == 0) {
-		cout << "mmmmmm" << endl;
-	}
-	else {
-		cout << "--------------------------------------------" << endl;
-		if (IS_IDLE() == true) {
 
-			cout << "--------------------///////////------------------------" << endl;
-			srand(time(0));
-			int val = 1 + rand() % (35 - 1 + 1);
-			cout << val << endl;
 
-			RRqueue.Dequeue(run);
-			counter--;
-			if (val >= 1 && val <= 15)
-			{
 
-				cout << "move to block list" << endl;
-				cout << val;
-				run = nullptr;
-				//ScheduleAlgo();
-				//move to block list
+	//if (counter == 0) {
+	//	cout << "mmmmmm" << endl;
+	//}
+	//else {
+	//	cout << "--------------------------------------------" << endl;
+	//	if (IS_IDLE() == true) {
 
-			}
-			else {
-				if (val > 15 && val <= 25) {
-					add_process(run);
-					cout << "DDF" << endl;
-					counter++;
-					cout << val;
-					run = nullptr;
-					//ScheduleAlgo();
-				}
-				else {
-					//add to terminated list
-					cout << "/add to terminated list" << endl;
-					cout << val;
-					run = nullptr;
-					//ScheduleAlgo();
-				}
-			}
+	//		cout << "--------------------///////////------------------------" << endl;
+	//		srand(time(0));
+	//		int val = 1 + rand() % (35 - 1 + 1);
+	//		cout << val << endl;
 
-		}
-		else {
-			//IS_IDLE();
-			cout << "not Idle or empty" << endl;
-		}
-	}
+	//		RRqueue.Dequeue(run);
+	//		counter--;
+	//		if (val >= 1 && val <= 15)
+	//		{
+
+	//			cout << "move to block list" << endl;
+	//			cout << val;
+	//			run = nullptr;
+	//			//ScheduleAlgo();
+	//			//move to block list
+
+	//		}
+	//		else {
+	//			if (val > 15 && val <= 25) {
+	//				add_process(run);
+	//				cout << "DDF" << endl;
+	//				counter++;
+	//				cout << val;
+	//				run = nullptr;
+	//				//ScheduleAlgo();
+	//			}
+	//			else {
+	//				//add to terminated list
+	//				cout << "/add to terminated list" << endl;
+	//				cout << val;
+	//				run = nullptr;
+	//				//ScheduleAlgo();
+	//			}
+	//		}
+
+	//	}
+	//	else {
+	//		//IS_IDLE();
+	//		cout << "not Idle or empty" << endl;
+	//	}
+	//}
 
 }
 

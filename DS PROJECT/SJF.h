@@ -2,6 +2,9 @@
 #include"PRIORITY_QUEUE.h"
 #include"Process/Process.h"
 #include"Processors/Processor.h"
+
+
+//class Scheduler;
 class SJF_processor :public Processor
 {
 private:
@@ -9,7 +12,8 @@ private:
 	Process* run;
 	int counter;
 public:
-	SJF_processor(int id);
+	SJF_processor(int id, Scheduler* s);
+
 	void add_process(Process* p) override;
 	void remove_process(Process* p) override;
 	void ScheduleAlgo() override;

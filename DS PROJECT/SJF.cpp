@@ -1,15 +1,20 @@
 #include "SJF.h"
-SJF_processor::SJF_processor(int id) :Processor(id)
+#include"Scheduler.h"
+
+
+
+SJF_processor::SJF_processor(int id, Scheduler* s) :Processor(id, s)
 {
 	type = "SJF_processor";
 	run = nullptr;
 	counter = 0;
 }
+
 void SJF_processor::add_process(Process* p)
 {
 	SJF_Pqueue.enqueue(p);
 	counter++;
-}
+} 
 void SJF_processor::remove_process(Process* p)
 {
 	counter--;
@@ -69,12 +74,12 @@ void SJF_processor::ScheduleAlgo()
 bool SJF_processor::IS_IDLE()
 {
 	if (run) {
-		cout << "false i" << endl;
+		//cout << "false i" << endl;
 		return false;
 
 	}
 	else {
-		cout << "true i" << endl;
+		//cout << "true i" << endl;
 		return true;
 
 	}
