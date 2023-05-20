@@ -34,6 +34,61 @@ void RR_processor::ScheduleAlgo()
 
 
 
+	if (RRqueue.IsEmpty() && IS_IDLE()) {
+		return;
+	}
+	if (!RRqueue.IsEmpty() && IS_IDLE()) {
+		RRqueue.Dequeue(run);
+		remove_process(run);
+		run->set_state(2);
+		cout << counter << endl;
+		return;
+	}
+	if (!IS_IDLE()) {
+		//not sure about the logic
+
+
+		for (int i = 0; i < min(Time_Slice, RRqueue.Count()); i++) {
+			if (run->check_io_request(run->get_cpu_time())) {
+				run->set_state(3);
+				run->set_cpu_time(run->get_cpu_time() - 1);
+				ss->Add_to_BLK(run);
+				return;
+
+			}
+			if (run->get_cpu_time() == 0) {
+				run->set_state(4);
+				run->set_cpu_time(run->get_cpu_time() - 1);
+				ss->Add_to_TRM(run);
+				return;
+
+			}
+			else {
+				run->set_cpu_time(run->get_cpu_time() - 1);
+				ss->Increase_timeStep();
+
+
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	//if (counter == 0) {
 	//	cout << "mmmmmm" << endl;
 	//}
@@ -114,7 +169,7 @@ void RR_processor::ScheduleAlgo()
 	//		}
 	//	}
 
-
+}
 bool RR_processor::IS_IDLE()
 {
 	if (run) {

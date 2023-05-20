@@ -12,6 +12,7 @@ private:
     int arrival_time;
     int response_time;
     int cpu_time;
+    int  T_cpu_time;
     int termination_time;
     int turnaround_duration; // Turnaround Duration = Termination time - Arrival time
     int waiting_time;        // Waiting time = Turnaround duration - CPU time
@@ -22,7 +23,6 @@ private:
         int io_duration;
         int io_request_time;
     };
-    io_request req;
     Queue<io_request> io_requests;
     Queue<string> pairs_io_request;
 
@@ -30,7 +30,8 @@ private:
     enum State { NEW, READY, RUNNING, BLOCKED, TERMINATED, ORPHAN };
     State state;
 public:
-    
+    io_request req;
+
 
     Process(int arrival_time, int pid, int cpu_time, io_request req);
     Process(int arrival_time, int pid, int cpu_time, int io_request_number);
@@ -53,6 +54,12 @@ public:
     void set_response_time(int response_time);
     void set_turnaround_duration(int turnaround_duration);
     void set_waiting_time(int waiting_time);
-    void set_state(State state);
+    void set_state(int state);
+    void set_iorequest();
+    bool check_io_request(int current_time);
+    
+    
+    
+
    
 };

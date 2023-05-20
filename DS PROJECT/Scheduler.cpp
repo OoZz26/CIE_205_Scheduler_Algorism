@@ -190,3 +190,15 @@ int Scheduler::GettimeStep()
 	return t_Step;
 }
 
+void Scheduler::Increase_timeStep()
+{
+	t_Step = t_Step + 1;
+}
+
+void Scheduler::simulatioon()
+{
+	while (TRM_Process_List.Count() != NumofProcess) {
+
+	}
+}
+

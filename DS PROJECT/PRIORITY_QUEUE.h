@@ -77,7 +77,12 @@ public:
         }
         count++;
     }
+
+
     Node2* GetHead() { return head; }
+
+
+
     int GetCount() { return count; }
 
     bool dequeue(Process* frntEntry) {

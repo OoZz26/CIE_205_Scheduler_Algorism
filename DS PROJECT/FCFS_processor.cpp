@@ -3,6 +3,8 @@
 
 FCFS_processor::FCFS_processor(int id, Scheduler* s) :Processor(id,s)
 {
+	run = nullptr;
+	counter = 0;
 	type = "FCFS_processor";
 }
 
@@ -22,56 +24,90 @@ void FCFS_processor::remove_process(Process* p)
 
 void FCFS_processor::ScheduleAlgo()
 {
-	if (FCFS_linked_list.ISEMPTY() || !IS_IDLE()) {
-		cout << "done" << endl;
+	if (FCFS_linked_list.ISEMPTY() && IS_IDLE()) {
+		return;
 	}
-	else {
-		if (counter == 0) {
-			cout << "mmmmmm" << endl;
+	if (!FCFS_linked_list.ISEMPTY() && IS_IDLE()) {
+		run = FCFS_linked_list.Front();
+		remove_process(run);
+		run->set_state(2);
+		cout << counter << endl;
+		return;
+	}
+	if (!IS_IDLE()) {
+		if (run->check_io_request(run->get_cpu_time())) {
+			run->set_state(3);
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			ss->Add_to_BLK(run);
+			return;
+
+		}
+		if (run->get_cpu_time() == 0) {
+			run->set_state(4);
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			ss->Add_to_TRM(run);
+			return;
+
 		}
 		else {
-			cout << "--------------------------------------------" << endl;
-			if (IS_IDLE() == true) {
-
-				cout << "--------------------///////////------------------------" << endl;
-				srand(time(0));
-				int val = 1 + rand() % (35 - 1 + 1);
-				run = FCFS_linked_list.Front();
-				FCFS_linked_list.DeleteFirst();
-				counter--;
-				if (val >= 1 && val <= 15)
-				{
-					cout << "move to block list" << endl;
-					cout << val;
-					run = nullptr;
-					//ScheduleAlgo();
-					//move to block list
-
-				}
-				else {
-					if (val > 15 && val <= 25) {
-						add_process(run);
-						cout << "DDF" << endl;
-						counter++;
-						cout << val;
-						run = nullptr;
-						//ScheduleAlgo();
-					}
-					else {
-						//add to terminated list
-						cout << "/add to terminated list" << endl;
-						cout << val;
-						run = nullptr;
-						//ScheduleAlgo();
-					}
-				}
-
-			}
-			else {
-				//IS_IDLE();
-				cout << "not Idle or empty" << endl;
-			}
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			return;
 		}
+
+
+	}
+
+
+	//if (FCFS_linked_list.ISEMPTY() || !IS_IDLE()) {
+	//	cout << "done" << endl;
+	//}
+	//else {
+	//	if (counter == 0) {
+	//		cout << "mmmmmm" << endl;
+	//	}
+	//	else {
+	//		cout << "--------------------------------------------" << endl;
+	//		if (IS_IDLE() == true) {
+
+	//			cout << "--------------------///////////------------------------" << endl;
+	//			srand(time(0));
+	//			int val = 1 + rand() % (35 - 1 + 1);
+	//			run = FCFS_linked_list.Front();
+	//			FCFS_linked_list.DeleteFirst();
+	//			counter--;
+	//			if (val >= 1 && val <= 15)
+	//			{
+	//				cout << "move to block list" << endl;
+	//				cout << val;
+	//				run = nullptr;
+	//				//ScheduleAlgo();
+	//				//move to block list
+
+	//			}
+	//			else {
+	//				if (val > 15 && val <= 25) {
+	//					add_process(run);
+	//					cout << "DDF" << endl;
+	//					counter++;
+	//					cout << val;
+	//					run = nullptr;
+	//					//ScheduleAlgo();
+	//				}
+	//				else {
+	//					//add to terminated list
+	//					cout << "/add to terminated list" << endl;
+	//					cout << val;
+	//					run = nullptr;
+	//					//ScheduleAlgo();
+	//				}
+	//			}
+
+	//		}
+	//		else {
+	//			//IS_IDLE();
+	//			cout << "not Idle or empty" << endl;
+	//		}
+	//	}
 
 
 
@@ -90,7 +126,7 @@ void FCFS_processor::ScheduleAlgo()
 		//		break;
 		//	}
 		//}
-	}
+
 }
 
 bool FCFS_processor::IS_IDLE()
@@ -107,8 +143,7 @@ bool FCFS_processor::IS_IDLE()
 }
 
 int FCFS_processor::get_counter() const
-{
-	return counter;
+{	return counter;
 }
 
 string FCFS_processor::Processor_Type()

@@ -8,6 +8,7 @@ Process::Process(int arrival_time, int pid, int cpu_time, io_request req)
     this->state = NEW;
     this->req.io_duration = req.io_duration;
     this->req.io_request_time = req.io_duration;
+    this->T_cpu_time = cpu_time;
 }
 
 Process::Process(int arrival_time, int pid, int cpu_time, int io_request_number)
@@ -16,6 +17,8 @@ Process::Process(int arrival_time, int pid, int cpu_time, int io_request_number)
     this->arrival_time = arrival_time;
     this->cpu_time = cpu_time;
     this->io_request_number = io_request_number;
+    this->T_cpu_time = cpu_time;
+
 }
 
 Process::Process(int arrival_time, int pid, int cpu_time)
@@ -23,6 +26,8 @@ Process::Process(int arrival_time, int pid, int cpu_time)
     this->pid = pid;
     this->arrival_time = arrival_time;
     this->cpu_time = cpu_time;
+    this->T_cpu_time = cpu_time;
+
 }
 
 
@@ -114,7 +119,61 @@ void Process::set_waiting_time(int waiting_time)
     this->waiting_time = waiting_time;
 }
 
-void Process::set_state(State state)
+void Process::set_state(int states)
 {
-    this->state = state;
+
+    //enum { NEW, READY, RUNNING, BLOCKED, TERMINATED, ORPHAN }
+    switch (states) {
+    case 0:
+        this->state = State::NEW;
+        break;
+    case 1:
+        this->state = State::READY;
+        break;
+    case 2:
+        this->state = State::RUNNING;
+        break;
+    case 3:
+        this->state = State::BLOCKED;
+        break;
+    case 4:
+        this->state = State::TERMINATED;
+        break;
+    case 5:
+        this->state = State::ORPHAN;
+        break;
+    default:
+        break;
+    }
+
+   
+}
+
+void Process::set_iorequest()
+{
+}
+
+bool Process::check_io_request(int current_time)
+{
+    Node1<io_request>* rq= io_requests.GetFront();
+    if (io_requests.IsEmpty()) {
+        return false;
+    }
+    else{
+        while (rq != nullptr)
+        {
+            int t = T_cpu_time - rq->GetItem().io_request_time;
+
+            if (t == current_time)
+            {
+                return true;
+
+            }
+            rq = rq->getNext();
+        }
+    }
+
+    return false;
+    
+   
 }

@@ -21,56 +21,92 @@ void SJF_processor::remove_process(Process* p)
 }
 void SJF_processor::ScheduleAlgo()
 
-	{
-		if (counter == 0) {
-			cout << "mmmmmm" << endl;
+{
+	 
+
+	if (SJF_Pqueue.IsEmpty() && IS_IDLE()) {
+		return;
+	}
+	if (!SJF_Pqueue.IsEmpty() && IS_IDLE()) {
+		SJF_Pqueue.dequeue(run);
+		remove_process(run);
+		run->set_state(2);
+		cout << counter << endl;
+		return;
+	}
+	if (!IS_IDLE()) {
+		if (run->check_io_request(run->get_cpu_time())) {
+			run->set_state(3);
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			ss->Add_to_BLK(run);
+			return;
+
+		}
+		if (run->get_cpu_time() == 0) {
+			run->set_state(4);
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			ss->Add_to_TRM(run);
+			return;
+
 		}
 		else {
-			cout << "--------------------------------------------" << endl;
-			if (IS_IDLE() == true) {
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			return;
 
-				cout << "--------------------///////////------------------------" << endl;
-				srand(time(0));
-				int val = 1 + rand() % (35 - 1 + 1);
-				cout << val << endl;
 
-				SJF_Pqueue.dequeue(run);
-				counter--;
-				if (val >= 1 && val <= 15)
-				{
-					cout << "move to block list" << endl;
-					cout << val;
-					run = nullptr;
-					//ScheduleAlgo();
-					//move to block list
-
-				}
-				else {
-					if (val > 15 && val <= 25) {
-						add_process(run);
-						cout << "DDF" << endl;
-						counter++;
-						cout << val;
-						run = nullptr;
-						//ScheduleAlgo();
-					}
-					else {
-						//add to terminated list
-						cout << "/add to terminated list" << endl;
-						cout << val;
-						run = nullptr;
-						//ScheduleAlgo();
-					}
-				}
-
-			}
-			else {
-				//IS_IDLE();
-				cout << "not Idle or empty" << endl;
-			}
 		}
 
+
 	}
+		//if (counter == 0) {
+		//	cout << "mmmmmm" << endl;
+		//}
+		//else {
+		//	cout << "--------------------------------------------" << endl;
+		//	if (IS_IDLE() == true) {
+
+		//		cout << "--------------------///////////------------------------" << endl;
+		//		srand(time(0));
+		//		int val = 1 + rand() % (35 - 1 + 1);
+		//		cout << val << endl;
+
+		//		SJF_Pqueue.dequeue(run);
+		//		counter--;
+		//		if (val >= 1 && val <= 15)
+		//		{
+		//			cout << "move to block list" << endl;
+		//			cout << val;
+		//			run = nullptr;
+		//			//ScheduleAlgo();
+		//			//move to block list
+
+		//		}
+		//		else {
+		//			if (val > 15 && val <= 25) {
+		//				add_process(run);
+		//				cout << "DDF" << endl;
+		//				counter++;
+		//				cout << val;
+		//				run = nullptr;
+		//				//ScheduleAlgo();
+		//			}
+		//			else {
+		//				//add to terminated list
+		//				cout << "/add to terminated list" << endl;
+		//				cout << val;
+		//				run = nullptr;
+		//				//ScheduleAlgo();
+		//			}
+		//		}
+
+		//	}
+		//	else {
+		//		//IS_IDLE();
+		//		cout << "not Idle or empty" << endl;
+		//	}
+		//}
+
+}
 bool SJF_processor::IS_IDLE()
 {
 	if (run) {

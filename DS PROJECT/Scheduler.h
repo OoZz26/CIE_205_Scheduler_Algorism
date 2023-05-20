@@ -39,6 +39,7 @@ public:
 	int AT, PID, CT, N;
 	int NumofProcess;
 	int Timeslice;
+
 	int RTF, MaxW, STL, ForkPROB;
 	int SPID, T;
 	void LoadData(string filename);
@@ -50,6 +51,9 @@ public:
 	Queue<Process*> GetBLKList()const;
 	Queue<Process*> GetTRMList() const;
 	int GettimeStep();
+	void Increase_timeStep();
+
+	void simulatioon();
 
 };
 
