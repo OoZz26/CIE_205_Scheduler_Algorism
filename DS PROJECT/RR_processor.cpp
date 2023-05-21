@@ -61,7 +61,7 @@ void RR_processor::ScheduleAlgo()
 				run->set_cpu_time(run->get_cpu_time() - 1);
 				ss->Add_to_TRM(run);
 				return;
-
+				 
 			}
 			else {
 				run->set_cpu_time(run->get_cpu_time() - 1);
@@ -212,17 +212,7 @@ void RR_processor::PrintReady()
 	cout << endl;
 }
 
-
 int RR_processor::RDY_Duration()
 {
-
-	Node1<Process*>* R = RRqueue.GetFront();
-	int cts = 0;
-
-	while (R != nullptr)
-	{
-		cts += R->GetItem()->get_cpu_time();
-		R = R->getNext();
-	}
-	return cts;
+	return 0;
 }
