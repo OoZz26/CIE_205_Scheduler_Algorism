@@ -39,6 +39,7 @@ void SJF_processor::ScheduleAlgo()
 			run->set_state(3);
 			run->set_cpu_time(run->get_cpu_time() - 1);
 			ss->Add_to_BLK(run);
+			run = nullptr;
 			return;
 
 		}
@@ -46,6 +47,8 @@ void SJF_processor::ScheduleAlgo()
 			run->set_state(4);
 			run->set_cpu_time(run->get_cpu_time() - 1);
 			ss->Add_to_TRM(run);
+			run = nullptr;
+
 			return;
 
 		}

@@ -1,7 +1,6 @@
 #include"Process.h"
 
 
-
 Process::Process(int arrival_time, int pid, int cpu_time, int io_request_number, int* io_durations, int* io_request_times) {
     this->arrival_time = arrival_time;
     this->pid = pid;
