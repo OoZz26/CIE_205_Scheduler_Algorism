@@ -31,6 +31,7 @@ private:
     State state;
 public:
     io_request req;
+    
 
 
     Process(int arrival_time, int pid, int cpu_time, io_request req);
@@ -63,3 +64,5 @@ public:
 
    
 };
+
+

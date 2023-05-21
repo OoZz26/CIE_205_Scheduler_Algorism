@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Process/Process.h" // assuming you have a separate header file for your process class
 #include "Processors/Processor.h" // assuming you have a separate header file for your processor class
@@ -9,9 +10,9 @@
 class UI {
 public:
     void input();
-
+    void print_message(string s);
     void output(Scheduler* sched);
-     
+
 };
 
 

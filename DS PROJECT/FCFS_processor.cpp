@@ -174,3 +174,18 @@ void FCFS_processor::PrintReady()
 	cout << endl;
 }
 
+
+int FCFS_processor::RDY_Duration()
+{
+	Node<Process*>* F = FCFS_linked_list.GetHead();
+	int cts = 0;
+
+	while (F != nullptr)
+	{
+		cts += F->getItem()->get_cpu_time();
+		F = F->getNext();
+	}
+	return cts;
+}
+
+

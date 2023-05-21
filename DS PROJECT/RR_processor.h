@@ -26,5 +26,6 @@ public:
 	string Processor_Type() override;
 	Process* get_run() override;
 	void PrintReady() override;
+	int RDY_Duration() override;
 };
 

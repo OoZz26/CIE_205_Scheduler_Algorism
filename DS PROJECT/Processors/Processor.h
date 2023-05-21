@@ -35,6 +35,8 @@ public:
 
 
     virtual void remove_process(Process* p) = 0;
+    virtual int RDY_Duration() = 0;
+
 
 
 };

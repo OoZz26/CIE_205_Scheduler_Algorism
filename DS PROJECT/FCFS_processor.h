@@ -25,5 +25,6 @@ public:
 	LinkedList<Process*> get_ready();
 	Process* get_run() override;
 	void PrintReady() override;
+	int RDY_Duration() override;
 };
 

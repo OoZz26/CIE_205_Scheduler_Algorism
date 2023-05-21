@@ -13,30 +13,31 @@ void UI::input() {
     cin.ignore();
 }
 
-void UI::output(Scheduler* sched){
-   cout << "Current Timestep: " << sched->GettimeStep()<< endl;
+void UI::print_message(string s)
+{
+    cout << s << endl;
+}
+
+
+void UI::output(Scheduler* sched) {
+    cout << "Current Timestep: " << sched->GettimeStep() << endl;
     cout << "------------------------- RDY Processes ---------------------------" << endl;
     // Print ready processes for each processor
-    Queue<Processor*> plist = sched->GetProcessorList();
+    Processor** plist = sched->GetProcessorList();
+    Queue<string> RunList;
 
-        Node1<Processor*>* temp = plist.GetFront();
-        int c = 1;
-        Queue<string> RunList;
-        while (temp != nullptr)
-        {
-            cout << "Processor " << c; 
-            Processor* P = temp->GetItem();
-            cout<< " [" << P->Processor_Type() << "]: ";
-            P->PrintReady();
-            Process* run = P->get_run();
-            int id = run->get_pid();
+    for (int i = 1; i < sizeof(plist) + 1; i++)
+    {
+        cout << "Processor " << i;
+        cout << " [" << plist[i - 1]->Processor_Type() << "]: ";
+        plist[i - 1]->PrintReady();
+        Process* run = plist[i - 1]->get_run();
+        int id = run->get_pid();
+        string run_P = to_string(id) + "(P" + to_string(i) + ")";
+        RunList.Enqueue(run_P);
+    }
 
-            string run_P = to_string(id) + "(P" +to_string(c) + ")";
-            RunList.Enqueue(run_P);
-
-        }
-        cout << endl;
-    
+    cout << endl;
 
     // Print blocked processes
     cout << "------------------ BLK processes -----------------" << endl;
@@ -47,12 +48,12 @@ void UI::output(Scheduler* sched){
     cout << blklist.Count() << " BLK: ";
     while (B != nullptr)
     {
-        cout  << B->GetItem()->get_pid() << ", ";
+        cout << B->GetItem()->get_pid() << ", ";
         B = B->getNext();
     }
     cout << endl;
 
-    
+
 
     // Print running processes
 
@@ -67,7 +68,7 @@ void UI::output(Scheduler* sched){
     }
     cout << endl;
 
-   
+
     cout << "------------------ TRM processes -----------------" << endl;
     Queue<Process*> trmlist = sched->GetTRMList();
 
@@ -83,5 +84,5 @@ void UI::output(Scheduler* sched){
 
     input();
     system("cls");
-  
+
 }

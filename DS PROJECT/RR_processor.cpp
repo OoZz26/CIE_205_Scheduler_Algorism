@@ -65,7 +65,7 @@ void RR_processor::ScheduleAlgo()
 			}
 			else {
 				run->set_cpu_time(run->get_cpu_time() - 1);
-				ss->Increase_timeStep();
+				//ss->Increase_timeStep();
 
 
 			}
@@ -210,4 +210,19 @@ void RR_processor::PrintReady()
 		R = R->getNext();
 	}
 	cout << endl;
+}
+
+
+int RR_processor::RDY_Duration()
+{
+
+	Node1<Process*>* R = RRqueue.GetFront();
+	int cts = 0;
+
+	while (R != nullptr)
+	{
+		cts += R->GetItem()->get_cpu_time();
+		R = R->getNext();
+	}
+	return cts;
 }

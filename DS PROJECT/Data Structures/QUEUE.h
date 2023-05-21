@@ -119,7 +119,7 @@ bool Queue<T>::Peek(T& frntEntry) const
     if (IsEmpty())
         return false;
 
-    frntEntry = frontPtr->getItem();
+    frntEntry = frontPtr->GetItem();
     return true;
 }
 

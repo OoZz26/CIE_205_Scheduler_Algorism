@@ -24,6 +24,7 @@ public:
 
 	string Processor_Type() override;
 	void PrintReady() override;
+	int RDY_Duration() override;
 
 
 };

@@ -155,3 +155,17 @@ void SJF_processor::PrintReady()
 	cout << endl;
 }
 
+
+int SJF_processor::RDY_Duration()
+{
+
+	Node2* R = SJF_Pqueue.GetHead();
+	int cts = 0;
+
+	while (R != nullptr)
+	{
+		cts += R->getItem()->get_cpu_time();
+		R = R->getNext();
+	}
+	return cts;
+}
