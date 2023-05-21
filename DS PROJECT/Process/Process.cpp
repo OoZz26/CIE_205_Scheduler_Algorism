@@ -1,4 +1,17 @@
 #include"Process.h"
+
+
+Process::Process(int arrival_time, int pid, int cpu_time, int io_request_number, int* io_durations, int* io_request_times) {
+    this->arrival_time = arrival_time;
+    this->pid = pid;
+    this->cpu_time = cpu_time;
+    this->T_cpu_time = cpu_time;
+    this->io_request_number = io_request_number;
+    this->state = State::NEW;
+
+    // Fill in the io_requests queue using the provided io_durations and io_request_times arrays
+    this->io_requests = fill_IO_Requests(io_request_number, io_durations, io_request_times);
+}
 Process::Process(int arrival_time, int pid, int cpu_time, io_request req)
 {
     this->pid = pid;
@@ -176,4 +189,12 @@ bool Process::check_io_request(int current_time)
     return false;
     
    
+}
+Queue<Process::io_request> Process::fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times) {
+    Queue<Process::io_request> io_requests;
+    for (int i = 0; i < io_request_number; i++) {
+        Process::io_request req = { io_durations[i], io_request_times[i] };
+        io_requests.Enqueue(req);
+    }
+    return io_requests;
 }

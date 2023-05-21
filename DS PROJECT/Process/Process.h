@@ -32,7 +32,7 @@ private:
 public:
     io_request req;
     
-
+    Process(int arrival_time, int pid, int cpu_time, int io_request_number, int* io_durations, int* io_request_times);
 
     Process(int arrival_time, int pid, int cpu_time, io_request req);
     Process(int arrival_time, int pid, int cpu_time, int io_request_number);
@@ -57,6 +57,7 @@ public:
     void set_waiting_time(int waiting_time);
     void set_state(int state);
     void set_iorequest();
+    Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);
     bool check_io_request(int current_time);
     
     
@@ -66,3 +67,4 @@ public:
 };
 
 
+ 

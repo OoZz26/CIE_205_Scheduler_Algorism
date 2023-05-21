@@ -29,7 +29,7 @@ void FCFS_processor::ScheduleAlgo()
 	}
 	if (!FCFS_linked_list.ISEMPTY() && IS_IDLE()) {
 		run = FCFS_linked_list.Front();
-		remove_process(run);
+		FCFS_linked_list.DeleteFirst();
 		run->set_state(2);
 		cout << counter << endl;
 		return;
@@ -39,6 +39,7 @@ void FCFS_processor::ScheduleAlgo()
 			run->set_state(3);
 			run->set_cpu_time(run->get_cpu_time() - 1);
 			ss->Add_to_BLK(run);
+			run = nullptr;
 			return;
 
 		}
@@ -46,10 +47,12 @@ void FCFS_processor::ScheduleAlgo()
 			run->set_state(4);
 			run->set_cpu_time(run->get_cpu_time() - 1);
 			ss->Add_to_TRM(run);
+			run = nullptr;
 			return;
 
 		}
 		else {
+			
 			run->set_cpu_time(run->get_cpu_time() - 1);
 			return;
 		}

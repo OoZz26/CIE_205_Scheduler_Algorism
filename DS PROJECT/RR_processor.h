@@ -13,6 +13,7 @@ private:
 	Process* run;
 	int counter;
 	int Time_Slice;
+	int counter1;
 	
 	Queue< Process*> RRqueue;
 

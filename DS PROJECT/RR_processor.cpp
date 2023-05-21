@@ -8,6 +8,8 @@ RR_processor::RR_processor(int id, Scheduler* s,int T_s) : Processor(id, s)
 	Time_Slice = T_s;
 	run = nullptr;
 	counter = 0;
+	counter1 = 0;
+
 }
 
 void RR_processor::add_process(Process* p)
@@ -26,7 +28,8 @@ void RR_processor::add_process(Process* p)
 
 void RR_processor::remove_process(Process* p)
 {
-	counter--;
+
+
 }
 
 void RR_processor::ScheduleAlgo()
@@ -39,135 +42,55 @@ void RR_processor::ScheduleAlgo()
 	}
 	if (!RRqueue.IsEmpty() && IS_IDLE()) {
 		RRqueue.Dequeue(run);
-		remove_process(run);
+		//remove_process(run);
 		run->set_state(2);
 		cout << counter << endl;
 		return;
 	}
 	if (!IS_IDLE()) {
 		//not sure about the logic
+		if (run->check_io_request(run->get_cpu_time())) {
+			run->set_state(3);
+			run->set_cpu_time(run->get_cpu_time() - 1);
+			ss->Add_to_BLK(run);
+			run = nullptr;
+			return;
 
+		}
+		if (run->get_cpu_time() == 0) {
+			run->set_state(4);
+			ss->Add_to_TRM(run);
+			run = nullptr;
 
-		for (int i = 0; i < min(Time_Slice, RRqueue.Count()); i++) {
-			if (run->check_io_request(run->get_cpu_time())) {
-				run->set_state(3);
-				run->set_cpu_time(run->get_cpu_time() - 1);
-				ss->Add_to_BLK(run);
-				return;
+			return;
 
-			}
-			if (run->get_cpu_time() == 0) {
-				run->set_state(4);
-				run->set_cpu_time(run->get_cpu_time() - 1);
-				ss->Add_to_TRM(run);
-				return;
-
-			}
-			else {
-				run->set_cpu_time(run->get_cpu_time() - 1);
-				//ss->Increase_timeStep();
-
-
-			}
 		}
 
 
 
+		else {
+			if (counter1 < Time_Slice) {
+				run->set_cpu_time(run->get_cpu_time() - 1);
+				++counter1;
+				return;
+
+			}
+			else {
+				run->set_state(1);
+
+				RRqueue.Enqueue(run);
+				run = nullptr;
+				return;
+			}
 
 
 
 
+		}
 
 
 
-
-
-
-
-
-
-
-
-	
-	//if (counter == 0) {
-	//	cout << "mmmmmm" << endl;
-	//}
-	//else {
-	//	cout << "--------------------------------------------" << endl;
-	//	if (IS_IDLE() == true) {
-
-	//		cout << "--------------------///////////------------------------" << endl;
-	//		srand(time(0));
-	//		int val = 1 + rand() % (35 - 1 + 1);
-	//		cout << val << endl;
-
-	//		RRqueue.Dequeue(run);
-	//		counter--;
-	//		if (val >= 1 && val <= 15)
-	//		{
-
-	//			cout << "move to block list" << endl;
-	//			cout << val;
-	//			run = nullptr;
-	//			//ScheduleAlgo();
-	//			//move to block list
-
-	//		}
-	//		else {
-	//			if (val > 15 && val <= 25) {
-	//				add_process(run);
-	//				cout << "DDF" << endl;
-	//				counter++;
-	//				cout << val;
-	//				run = nullptr;
-	//				//ScheduleAlgo();
-	//			}
-	//			else {
-	//				//add to terminated list
-	//				cout << "/add to terminated list" << endl;
-	//				cout << val;
-	//				run = nullptr;
-	//				//ScheduleAlgo();
-	//			}
-	//		}
-
-	//	}
-	//	else {
-	//		//IS_IDLE();
-	//		cout << "not Idle or empty" << endl;
-	//	}
-	//}
-
-}
-
-
-	//	if (Fork->get_cpu_time() == 0) {
-	//		//shift the process to end queue
-	//	}
-	//	else {
-	//		for (int i = 1; i <= Time_Slice; i++) {
-	//			cout << "-----------------------"<<endl;
-	//			Fork->set_cpu_time(Fork->get_cpu_time() - 1);
-	//			if (Fork->get_cpu_time() == Fork->get_io_request_time()) {
-	//				// move to bloked queue
-	//				ScheduleAlgo();
-	//				break;
-	//			}
-	//			if (Fork->get_cpu_time() == 0) {
-	//				//shift the process to end queue
-	//				ScheduleAlgo();
-	//				break;
-	//			}
-	//		}
-	//		if (Fork->is_ready(Fork)) {
-	//			RRqueue.EnQueue(Fork);
-	//			ScheduleAlgo();
-	//		}
-	//		else
-	//		{
-	//			ScheduleAlgo();
-	//		}
-	//	}
+	}
 
 }
 bool RR_processor::IS_IDLE()
