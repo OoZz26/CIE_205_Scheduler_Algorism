@@ -28,7 +28,7 @@ private:
 	Queue<Process*> BLK_Process_List;
 	Queue<Process*> TRM_Process_List;
 	Queue< SIGKILL> Signal_Kill_List;
-	Queue<string> Pairs_of_io;
+	
 	Queue<int>List;
 	int t_Step;
 	
@@ -54,7 +54,11 @@ public:
 	Queue<Process*> GetTRMList() const;
 	int GettimeStep();
 	Processor* get_shortest_processor();
+	Processor* get_longest_processor();
 	void Simulate();
+	void work_Steal(int step);
+	int LQF(Processor* p);
+	int SQF(Processor* p);
 	~Scheduler();
 
 };

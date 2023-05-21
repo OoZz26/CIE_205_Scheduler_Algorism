@@ -24,7 +24,10 @@ public:
 	string Processor_Type() override;
 	LinkedList<Process*> get_ready();
 	Process* get_run() override;
+	void set_run(Process* p) override;
+
 	void PrintReady() override;
 	int RDY_Duration() override;
+	Process* get_fIrst_proces() override;
 };
 

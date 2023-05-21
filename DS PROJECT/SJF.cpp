@@ -136,6 +136,11 @@ Process* SJF_processor::get_run()
 	return run;
 }
 
+void SJF_processor::set_run(Process* p)
+{
+	this->run = p;
+}
+
 PriorityQueue SJF_processor::get_ready()
 {
 	return SJF_Pqueue;
@@ -171,4 +176,17 @@ int SJF_processor::RDY_Duration()
 		R = R->getNext();
 	}
 	return cts;
+}
+
+Process* SJF_processor::get_fIrst_proces()
+{
+	Process* p = new Process();
+	if (!SJF_Pqueue.IsEmpty()) {
+		SJF_Pqueue.dequeue(p);
+		return p;
+	}
+	else {
+		return nullptr;
+	}
+	
 }

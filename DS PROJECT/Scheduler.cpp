@@ -78,13 +78,14 @@ void Scheduler::LoadData(string filename)
 
 				for (int i = 0; i < NumofProcess; i++)
 				{
+					
 					if (Myfile.eof())
 					{
 						break;
 					}
 					else
 					{
-
+						Queue<string> Pairs_of_io;
 						string x;
 						Myfile >> AT >> PID >> CT >> N;
 						if (N > 0)
@@ -153,29 +154,6 @@ void Scheduler::Dispaly_New_Process_List()
 
 }
 
-void Scheduler::Display_input_file_Data()
-{
-	cout << "noOf_FCFS is" << " " << noOf_FCFS << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "noOF_SJF is" << " " << noOF_SJF << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "noOF_RR is" << " " << noOF_RR << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "Timeslice is" << " " << Timeslice << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "RTF is" << " " << RTF << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "MaxW is" << " " << MaxW << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "STL is" << " " << STL << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "ForkPROB is" << " " << ForkPROB << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "NumofProcess is" << " " << NumofProcess << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "noOf_Signal_Kill is" << " " << noOf_Signal_Kill << endl;
-}
-
 void Scheduler::Add_to_BLK(Process* p)
 {
 	BLK_Process_List.Enqueue(p);
@@ -236,6 +214,39 @@ Processor* Scheduler::get_shortest_processor() {
 	return Processors_List[0];
 }
 
+
+Processor* Scheduler::get_longest_processor() {
+	const int p_count = sizeof(Processors_List);
+
+	int* array_CTs = new int[p_count];
+	int i = 0;
+
+
+	for (int i = 0; i < p_count; i++)
+	{
+
+		array_CTs[i] = Processors_List[i]->RDY_Duration();
+
+	}
+
+	int max = array_CTs[0];
+	for (int i = 0; i < p_count; i++) {
+		if (array_CTs[i] > max) {
+			max = array_CTs[i];
+		}
+	}
+	for (int i = 0; i < p_count; i++) {
+		if (Processors_List[i]->RDY_Duration() == max) {
+			return Processors_List[i];
+		}
+	}
+	return Processors_List[0];
+}
+
+
+
+
+
 void Scheduler::Simulate()
 {
 	UI* pUI = new UI();
@@ -262,20 +273,54 @@ void Scheduler::Simulate()
 			}
 		}
 
-		for (int i = 0; i < sizeof(Processors_List); i++)
-		{
-			Process* p = Processors_List[i]->get_run();
-			if (p)
-			{
+		work_Steal(t_Step); // work stealing function
 
-			}
 
-		}
+
+
+		
+		
 
 
 	}
 
 
+}
+
+	
+
+void Scheduler::work_Steal(int step)
+{
+
+	// work stealing starts here 
+	if (t_Step % STL == 0) { // every stl 
+		Processor* short_processor = get_shortest_processor();
+		Processor* long_processor = get_longest_processor();
+		// here the LQF must be for the most processor only not genaral same as sqf 
+		while (LQF(long_processor) != 0 && (((LQF(long_processor) - SQF(short_processor)) / LQF(long_processor)) * 100) > 40) // work stealing // what if infinite loop ?? 
+		{
+			Process* firstprocess = long_processor->get_fIrst_proces(); // here the get first function is with removal of the first element
+			short_processor->add_process(firstprocess); // adding to the ready of the shortest queueu
+			// removing the first element from run if it was
+			if (long_processor->get_run() == firstprocess) {
+				long_processor->set_run(nullptr);
+			}
+
+
+		}
+	}
+	//end of work stealing 
+
+}
+
+int Scheduler::LQF(Processor* p)
+{
+	return p->RDY_Duration();
+}
+
+int Scheduler::SQF(Processor* p)
+{
+	return p->RDY_Duration();
 }
 
 Scheduler::~Scheduler()
