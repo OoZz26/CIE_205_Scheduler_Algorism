@@ -75,6 +75,7 @@ void Scheduler::LoadData(string filename)
 			if (currenLine > 4 && currenLine <= NumofProcess + 4)
 			{
 
+
 				for (int i = 0; i < NumofProcess; i++)
 				{
 					if (Myfile.eof())
@@ -83,6 +84,7 @@ void Scheduler::LoadData(string filename)
 					}
 					else
 					{
+
 						string x;
 						Myfile >> AT >> PID >> CT >> N;
 						if (N > 0)
