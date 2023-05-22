@@ -165,8 +165,9 @@ void Process::set_state(int states)
    
 }
 
-void Process::set_iorequest()
+Queue<io_request> Process::get_iorequest()
 {
+    return io_requests;
 }
 
 bool Process::check_io_request(int current_time)
@@ -213,6 +214,26 @@ void Process::set_child_pointer(Process* p)
 Process* Process::get_child_pointer()
 {
     return child_pointr;
+}
+int Process::get_N_ofIoR()
+{
+    return io_request_number;
+}
+int Process::get_BLK_counter()
+{
+    return BLK_counter;
+}
+void Process::increament_BLK_counter()
+{
+    BLK_counter;
+}
+void Process::reset_BLK_counter()
+{
+    BLK_counter = 0;
+}
+void Process::decrement_N_ofIoR()
+{
+    io_request_number--;
 }
 //Queue<Process::io_request> Process::fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times) {
 //    Queue<Process::io_request> io_requests;

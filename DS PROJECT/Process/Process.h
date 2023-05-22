@@ -13,7 +13,7 @@ private:
     int arrival_time;
     int response_time;
     int cpu_time;
-    int  T_cpu_time;
+    int T_cpu_time;
     int termination_time;
     int turnaround_duration; // Turnaround Duration = Termination time - Arrival time
     int waiting_time;        // Waiting time = Turnaround duration - CPU time
@@ -21,6 +21,7 @@ private:
     int io_request_time;
     int io_duration;
     bool has_Forked_before = false;
+    int BLK_counter = 0;
     
     Queue<io_request> io_requests;
     Queue<string> pairs_io_request;
@@ -59,7 +60,7 @@ public:
     void set_turnaround_duration(int turnaround_duration);
     void set_waiting_time(int waiting_time);
     void set_state(int state);
-    void set_iorequest();
+    Queue<io_request> get_iorequest();
     /*Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);*/
     bool check_io_request(int current_time);
 
@@ -68,6 +69,11 @@ public:
     void set_has_forked(bool state);
     void set_child_pointer(Process* p);
     Process* get_child_pointer();
+    int get_N_ofIoR();
+    int get_BLK_counter();
+    void increament_BLK_counter();
+    void reset_BLK_counter();
+    void decrement_N_ofIoR();
     
     
     

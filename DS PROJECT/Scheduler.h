@@ -68,6 +68,8 @@ public:
 	~Scheduler();
 	void print(Queue<Process*> TRM_Process_List);
 	void Run_to_TRM(int step);
+	void RUN_TO_BLK();
+	void BLK_TO_RDY();
 
 };
 

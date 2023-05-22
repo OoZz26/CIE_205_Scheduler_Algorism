@@ -298,6 +298,67 @@ Processor* Scheduler::get_longest_processor() {
 	return Processors_List[0];
 }
 
+
+void Scheduler::RUN_TO_BLK()
+{
+	for (int i = 0; i < size; i++)
+	{
+		Process* R = Processors_List[i]->get_run();
+		if (R != nullptr) {
+			if (R->get_N_ofIoR() > 0) {
+				
+					int executedtime = R->get_cpu_time() - R->get_remainnig_time();
+					
+					io_request req;
+					Queue<io_request> Q = R->get_iorequest();
+					Q.Peek(req);
+					if (req.io_request_time <= executedtime) {
+						
+						R->decrement_N_ofIoR(); // so that the next time the number of io requests is less than before 
+						R->reset_BLK_counter();// resenting BLK counter because it has enered new IO request
+						BLK_Process_List.Enqueue(R);
+						Processors_List[i]->set_run(nullptr);
+						R->set_state(3);
+					
+					}
+				
+			}
+		}
+
+	}
+
+
+	
+}
+
+void Scheduler::BLK_TO_RDY()
+{
+	Queue<Process*>* TMP = new Queue<Process*>;
+	Process* empty;
+	
+	while (BLK_Process_List.Dequeue(empty)) {
+		io_request req;
+		Queue<io_request> Q = empty->get_iorequest();
+		Q.Peek(req);
+		if (empty->get_BLK_counter() == req.io_duration) {
+			get_shortest_processor()->add_process(empty);
+
+		}
+		else {
+			TMP->Enqueue(empty);
+		}
+
+	}
+	while (TMP->Dequeue(empty)) {
+		BLK_Process_List.Enqueue(empty);
+	}
+	delete TMP;
+}
+
+
+
+
+
 void Scheduler::Run_to_TRM(int step)
 {
 	for (int  i = 0; i < size; i++)
@@ -323,8 +384,6 @@ void Scheduler::Run_to_TRM(int step)
 	
 
 }
-
-
 
 
 

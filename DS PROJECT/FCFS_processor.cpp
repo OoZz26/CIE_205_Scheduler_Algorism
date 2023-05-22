@@ -228,6 +228,7 @@ int FCFS_processor::RDY_Duration()
 	while (F != nullptr)
 	{
 		cts += F->getItem()->get_cpu_time();
+		
 		F->getNext(F);
 	}
 	return cts;
