@@ -9,7 +9,8 @@ protected:
     int ProcessorID;
     string type;
     Scheduler* ss= nullptr;
-    
+    Queue<Process*> TRM_Process_List;
+    Queue<Process*> readyQueue;
 
 public:
     Processor(int n, Scheduler* s) {
@@ -35,6 +36,7 @@ public:
     virtual void remove_process(int  id) = 0;
     virtual int RDY_Duration() = 0;
     virtual Process* get_fIrst_proces() = 0;
+    void addToTerminatedList(Process* p);
 
 
 

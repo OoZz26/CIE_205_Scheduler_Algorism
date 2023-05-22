@@ -1,4 +1,4 @@
-#pragma once
+    #pragma once
 #include<iostream>
 using namespace std;
 
@@ -37,6 +37,12 @@ public:
 		return item;
 	} // end getItem
 
+    T* GetItemReference() const
+    {
+        return &item;
+    } // end getItem
+
+
 	Node1<T>* getNext() const
 	{
 		return next;
@@ -65,7 +71,10 @@ public:
             return true;
         }      return false;
     }
+    Node1<T>* GetFront() { return frontPtr; }
+    
     //~Queue();
+    void Dequeue();
 
 };
 
@@ -116,6 +125,31 @@ bool Queue<T>::Dequeue(T& frntEntry)
 
     count--;
     return true;
+}
+
+
+
+template <typename T>
+Node1<T>* Queue<T>::GetFront() {
+    return frontPtr;
+}
+
+template <typename T>
+void Queue<T>::Dequeue()
+{
+    if (IsEmpty())
+        return;
+
+    Node1<T>* nodeToDeletePtr = frontPtr;
+    frontPtr = frontPtr->getNext();
+    // Queue is not empty; remove front
+    if (nodeToDeletePtr == backPtr)  // Special case: last node in the queue
+        backPtr = nullptr;
+
+    // Free memory reserved for the dequeued node
+    delete nodeToDeletePtr;
+
+    count--;
 }
 
 template <typename T>

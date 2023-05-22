@@ -9,6 +9,10 @@ FCFS_processor::FCFS_processor(int id, Scheduler* s) :Processor(id,s)
 }
 
 
+void Processor::addToTerminatedList(Process* p) {
+	TRM_Process_List.Enqueue(p);
+}
+
 
 void FCFS_processor::add_process(Process* p)
 {
