@@ -237,6 +237,11 @@ void Process::set_state(int states)
    
 }
 
+Queue<io_request> Process::get_io_request()
+{
+    return io_requests;
+}
+
 
 bool Process::check_io_request(int current_time)
 {

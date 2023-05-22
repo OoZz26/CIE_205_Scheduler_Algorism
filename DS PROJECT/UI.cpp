@@ -89,7 +89,6 @@ void UI::output(Scheduler* sched) {
     }
     cout << endl;
 
-    input();
-    system("cls");
+    
 
 }

@@ -66,8 +66,8 @@ public:
 	int LQF(Processor* p);
 	int SQF(Processor* p);
 	~Scheduler();
-	void print(Queue<Process*> TRM_Process_List);
-	void Run_to_TRM();
+	void print();
+	void Run_to_TRM(int step);
 	void print();
 	void Run_to_TRM(int step);
 	void RUN_TO_BLK();

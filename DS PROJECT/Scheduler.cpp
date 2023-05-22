@@ -2,6 +2,7 @@
 #include "Scheduler.h"
 #include"Processors/Processor.h"
 #include"Struct.h"
+#include<ctime>
 #include <iostream>
 using namespace std;
 Scheduler::Scheduler()
@@ -376,7 +377,7 @@ void Scheduler::incrementBLKcounters()
 
 
 
-void Scheduler::Run_to_TRM()
+void Scheduler::Run_to_TRM(int step)
 {
 	for (int  i = 0; i < size; i++)
 	{
@@ -418,12 +419,11 @@ void Scheduler::Simulate()
 	string fileName;
 	cin >> fileName;
 	LoadData(fileName + ".txt");
-	Dispaly_New_Process_List();
-
+	
 	int counter_for_processors = 0;
-	/*pUI->print_message("Please choose the mode you want\n 1- for Interactive Mode \n 2- for Step by Step Mode \n 3- for Silent Mode");
+	pUI->print_message("Please choose the mode you want\n 1- for Interactive Mode \n 2- for Step by Step Mode \n 3- for Silent Mode");
 	int mode;
-	cin >> mode;*/
+	cin >> mode;
 
 
 	pUI->print_message("---------------------------------------------------------------------------------------------");
@@ -451,13 +451,32 @@ void Scheduler::Simulate()
 
 
 
+		switch (mode)
+		{
+			case 1:
+				pUI->output(this);
+				pUI->input();
+				system("cls");
+				
+				break;
+			case 2:
+				pUI->output(this);
+				_sleep(1000);
+				break;
+			case 3:
+				pUI->print_message("This id the silent mode");
 
+				break;
+			default:
+				break;
+		}
 		
 		pUI->output(this); 
 		t_Step++;
 
 
 	}
+	print();
 	
 
 }

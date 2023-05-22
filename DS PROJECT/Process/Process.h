@@ -75,7 +75,7 @@ public:
     void set_turnaround_duration(int turnaround_duration);
     void set_waiting_time(int waiting_time);
     void set_state(int state);
-    Queue<io_request> get_iorequest();
+    Queue<io_request> get_io_request();
 
     /*Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);*/
     bool check_io_request(int current_time);
