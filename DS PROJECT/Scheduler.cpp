@@ -342,6 +342,7 @@ void Scheduler::BLK_TO_RDY()
 		Q.Peek(req);
 		if (empty->get_BLK_counter() == req.io_duration) {
 			get_shortest_processor()->add_process(empty);
+			Q.Dequeue(req);
 
 		}
 		else {
