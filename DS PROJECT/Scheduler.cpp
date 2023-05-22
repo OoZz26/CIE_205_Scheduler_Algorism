@@ -250,7 +250,7 @@ Processor* Scheduler::get_shortest_FCFS()
 				array_CTs[i] = Processors_List[i]->RDY_Duration();
 
 			}
-
+			 
 			int min = array_CTs[0];
 			for (int i = 0; i < noOf_FCFS; i++) {
 				if (array_CTs[i] < min) {
@@ -420,7 +420,7 @@ void Scheduler::Simulate()
 				New_Process_List.Dequeue(p);
 
 				get_shortest_processor()->add_process(p); // adding the procecess to the least time processor
-				for (int i = 0; i < sizeof(Processors_List); i++) {
+				for (int i = 0; i < size; i++) {
 					Processors_List[i]->ScheduleAlgo();
 				}
 
@@ -428,7 +428,8 @@ void Scheduler::Simulate()
 			}
 		}
 
-		work_Steal(t_Step); // work stealing function
+		//work_Steal(t_Step); // work stealing function
+
 
 
 

@@ -8,6 +8,7 @@ Process::Process(int arrival_time, int pid, int cpu_time, int io_request_number,
     this->T_cpu_time = cpu_time;
     this->io_request_number = io_request_number;
     this->io_requests = io_requests;
+    this->Remaning_time = cpu_time;
     this->state = State::NEW;
 
     // Fill in the io_requests queue using the provided io_durations and io_request_times arrays
@@ -96,6 +97,7 @@ int Process::get_io_request_number()
     return io_request_number;
 }
 
+
 void Process::set_io_request_number(int io_request_numbers)
 {
     io_request_number = io_request_numbers;
@@ -172,17 +174,22 @@ Queue<io_request> Process::get_iorequest()
 
 bool Process::check_io_request(int current_time)
 {
-    Node1<io_request>* rq= io_requests.GetFront();
+    Node1<io_request>* rq = nullptr;
+        io_requests.GetFront(rq);
+        
+
     if (io_requests.IsEmpty()) {
         return false;
     }
     else{
         while (rq != nullptr)
         {
-            int t = T_cpu_time - rq->GetItem().io_request_time;
-
-            if (t == current_time)
+            int p = rq->GetItem().io_request_time;
+            int t = cpu_time - T_cpu_time;
+                
+            if (t == p)
             {
+
                 return true;
 
             }
@@ -197,6 +204,10 @@ bool Process::check_io_request(int current_time)
 int Process::get_remainnig_time()
 {
     return T_cpu_time;
+}
+void Process::set_remainnig_time(int remaing)
+{
+    T_cpu_time = remaing;
 }
 bool Process::get_has_forked()
 {

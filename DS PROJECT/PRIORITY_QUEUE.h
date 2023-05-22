@@ -85,7 +85,7 @@ public:
 
     int GetCount() { return count; }
 
-    bool dequeue(Process* frntEntry) {
+    bool dequeue(Process* &frntEntry) {
         if (IsEmpty())
             return false;
 

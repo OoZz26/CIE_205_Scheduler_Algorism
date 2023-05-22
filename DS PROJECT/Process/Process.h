@@ -20,6 +20,7 @@ private:
     int io_request_number;
     int io_request_time;
     int io_duration;
+    int Remaning_time;
     bool has_Forked_before = false;
     int BLK_counter = 0;
     
@@ -65,6 +66,7 @@ public:
     bool check_io_request(int current_time);
 
     int get_remainnig_time();
+    void set_remainnig_time(int remaing);
     bool get_has_forked();
     void set_has_forked(bool state);
     void set_child_pointer(Process* p);

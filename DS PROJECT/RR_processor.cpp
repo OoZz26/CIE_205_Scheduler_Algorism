@@ -49,15 +49,15 @@ void RR_processor::ScheduleAlgo()
 	}
 	if (!IS_IDLE()) {
 		//not sure about the logic
-		if (run->check_io_request(run->get_cpu_time())) {
+		if (run->check_io_request(run->get_remainnig_time())) {
 			run->set_state(3);
-			run->set_cpu_time(run->get_cpu_time() - 1);
+			run->set_remainnig_time(run->get_remainnig_time() - 1);
 			ss->Add_to_BLK(run);
 			run = nullptr;
 			return;
 
 		}
-		if (run->get_cpu_time() == 0) {
+		if (run->get_remainnig_time() == 0) {
 			run->set_state(4);
 			ss->Add_to_TRM(run);
 			run = nullptr;
@@ -70,7 +70,7 @@ void RR_processor::ScheduleAlgo()
 
 		else {
 			if (counter1 < Time_Slice) {
-				run->set_cpu_time(run->get_cpu_time() - 1);
+				run->set_remainnig_time(run->get_remainnig_time() - 1);			
 				++counter1;
 				return;
 
@@ -130,7 +130,8 @@ void RR_processor::set_run(Process* p)
 
 void RR_processor::PrintReady()
 {
-	Node1<Process*>* R = RRqueue.GetFront();
+	Node1<Process*>* R = nullptr;
+		RRqueue.GetFront(R);
 	cout << RRqueue.Count() << " RDY: ";
 	while (R != nullptr)
 	{
@@ -144,7 +145,8 @@ void RR_processor::PrintReady()
 int RR_processor::RDY_Duration()
 {
 
-	Node1<Process*>* R = RRqueue.GetFront();
+	Node1<Process*>* R = nullptr;
+	RRqueue.GetFront(R);
 	int cts = 0;
 
 	while (R != nullptr)
