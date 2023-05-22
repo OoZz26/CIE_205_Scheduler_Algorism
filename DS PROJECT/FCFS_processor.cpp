@@ -247,4 +247,37 @@ Process* FCFS_processor::get_fIrst_proces()
 	}
 }
 
+int FCFS_processor::get_busy_T()
+{
+	return busy_T;
+}
+
+int FCFS_processor::get_Idle_T()
+{
+	return Idle_T;
+}
+
+void FCFS_processor::increment_busy_time()
+{
+	
+		if (run != NULL) {
+			busy_T++;
+		}
+		else
+		{
+			Idle_T++;
+		}
+	
+}
+
+int  FCFS_processor::get_number()
+{
+	return number;
+}
+
+void FCFS_processor::set_number(int n)
+{
+	number = n;
+}
+
 

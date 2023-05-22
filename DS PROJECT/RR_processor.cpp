@@ -168,3 +168,36 @@ Process* RR_processor::get_fIrst_proces()
 		return nullptr;
 	}
 }
+
+int RR_processor::get_busy_T()
+{
+	return busy_T;
+}
+
+int RR_processor::get_Idle_T()
+{
+	return Idle_T;
+}
+
+void RR_processor::increment_busy_time()
+{
+
+	if (run != NULL) {
+		busy_T++;
+	}
+	else
+	{
+		Idle_T++;
+	}
+
+}
+
+int  RR_processor::get_number()
+{
+	return number;
+}
+
+void RR_processor::set_number(int n)
+{
+	number = n;
+}

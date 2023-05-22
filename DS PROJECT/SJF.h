@@ -11,6 +11,9 @@ private:
 	PriorityQueue SJF_Pqueue;
 	Process* run;
 	int counter;
+	int busy_T = 0;
+	int Idle_T = 0;
+	int number;
 public:
 	SJF_processor(int id, Scheduler* s);
 
@@ -27,6 +30,11 @@ public:
 	void PrintReady() override;
 	int RDY_Duration() override;
 	Process* get_fIrst_proces() override;
+	int get_busy_T() override;
+	int get_Idle_T() override;
+	void increment_busy_time() override;
+	int get_number()override;
+	void set_number(int n) override;
 
 
 };

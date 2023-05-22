@@ -45,6 +45,8 @@ public:
 	int SPID, T;
 	int size;
 	int Sizeofprocessorsarray;
+	int worksteal_counter = 0;
+	int forking_counter = 0;
 
 	void LoadData(string filename);
 	void Create_Processors(int noOf_FCFS, int noOF_SJF, int noOF_RR, int Timeslice);
@@ -66,7 +68,7 @@ public:
 	int LQF(Processor* p);
 	int SQF(Processor* p);
 	~Scheduler();
-	void print(Queue<Process*> TRM_Process_List);
+	void print();
 	void Run_to_TRM(int step);
 	void RUN_TO_BLK();
 	void BLK_TO_RDY();

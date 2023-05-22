@@ -11,15 +11,15 @@ class Process
 private:
     int pid;
     int arrival_time;
-    int response_time;
+    int response_time = 0;
     int cpu_time;
     int T_cpu_time;
-    int termination_time;
-    int turnaround_duration; // Turnaround Duration = Termination time - Arrival time
-    int waiting_time;        // Waiting time = Turnaround duration - CPU time
+    int termination_time = 0;
+    int turnaround_duration = 0; // Turnaround Duration = Termination time - Arrival time
+    int waiting_time = 0;        // Waiting time = Turnaround duration - CPU time
     int io_request_number;
     int io_request_time;
-    int io_duration;
+    int io_totalduration=0;
     int Remaning_time;
     bool has_Forked_before = false;
     int BLK_counter = 0;
@@ -49,19 +49,26 @@ public:
     int get_pid();
     int get_arrival_time();
     int get_response_time();
+    int get_termination_time();
+    int get_turnaround_duration();
     int get_cpu_time();
+    int get_Waiting_t();
     State get_state();
     bool is_ready(Process* p);
     int get_io_request_number();
+    void incrementIO_D();
+    int get_totalIOD();
     void set_io_request_number( int io_request_numbers);
     void set_id(int id);
     void set_arrival_time(int arrivalrime);
+    void set_TT(int t);
     void set_cpu_time(int ct);
     void set_response_time(int response_time);
     void set_turnaround_duration(int turnaround_duration);
     void set_waiting_time(int waiting_time);
     void set_state(int state);
     Queue<io_request> get_iorequest();
+
     /*Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);*/
     bool check_io_request(int current_time);
 

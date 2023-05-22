@@ -10,6 +10,8 @@ Process::Process(int arrival_time, int pid, int cpu_time, int io_request_number,
     this->io_requests = io_requests;
     this->Remaning_time = cpu_time;
     this->state = State::NEW;
+    this->turnaround_duration = termination_time - arrival_time;
+    this->waiting_time = turnaround_duration - cpu_time;
 
     // Fill in the io_requests queue using the provided io_durations and io_request_times arrays
    /* this->io_requests = fill_IO_Requests(io_request_number, io_durations, io_request_times);*/
@@ -69,9 +71,24 @@ int Process::get_response_time()
     return response_time;
 }
 
+int Process::get_termination_time()
+{
+    return termination_time;
+}
+
+int Process::get_turnaround_duration()
+{
+    return  turnaround_duration;
+}
+
 int Process::get_cpu_time()
 {
     return cpu_time;
+}
+
+int Process::get_Waiting_t()
+{
+    return waiting_time;
 }
 
 Process::State Process::get_state()
@@ -97,6 +114,16 @@ int Process::get_io_request_number()
     return io_request_number;
 }
 
+void Process::incrementIO_D()
+{
+    io_totalduration++;
+}
+
+int Process::get_totalIOD()
+{
+    return io_totalduration;
+}
+
 
 void Process::set_io_request_number(int io_request_numbers)
 {
@@ -111,6 +138,11 @@ void Process::set_id(int id)
 void Process::set_arrival_time(int arrivalrime)
 {
     arrival_time = arrivalrime;
+}
+
+void Process::set_TT(int t)
+{
+    termination_time = t;
 }
 
 

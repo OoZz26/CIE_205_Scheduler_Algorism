@@ -117,14 +117,14 @@ void Scheduler::LoadData(string filename) {
 			
 		}
 		
-		/*int KillTime, ProcessID;
+		int KillTime, ProcessID;
 
 		while (!infile.eof()) {
 			infile >> KillTime >> ProcessID;
 			SIGKILL k = { KillTime, ProcessID };
 			Signal_Kill_List.Enqueue(k);
 			noOf_Signal_Kill++;
-		}*/
+		}
 		if (infile.is_open()) {
 			infile.close();
 		}
@@ -362,6 +362,7 @@ void Scheduler::incrementBLKcounters()
 	Process* empty;
 	while (BLK_Process_List.Dequeue(empty)) {
 		empty->increament_BLK_counter();
+		empty->incrementIO_D();
 		TMP->Enqueue(empty);
 	}
 
@@ -389,6 +390,7 @@ void Scheduler::Run_to_TRM(int step)
 					TRM_Process_List.Enqueue(R->get_child_pointer());
 					R->set_state(4);
 					R->set_child_pointer(nullptr);
+					R->set_TT(step);
 				}
 				
 				Processors_List[i]->set_run(nullptr);
@@ -473,6 +475,7 @@ void Scheduler::Fork(int step, int forkprob , Processor* processor)
 			processor->get_run()->set_has_forked(true); // setting the has forked to true
 			Processor* x = get_shortest_FCFS();
 			x->add_process(p);
+			forking_counter++;
 
 		}
 	}
@@ -501,6 +504,8 @@ void Scheduler::work_Steal(int step)
 
 
 		}
+		worksteal_counter++;
+
 	}
 	//end of work stealing 
 
@@ -525,56 +530,54 @@ Scheduler::~Scheduler()
 
 }
 
-//void Scheduler::print(Queue<Process*> TRM_Process_List)
-//{
-//	ofstream output;
-//	output.open("OUTPUT.txt", ios::trunc);
-//
-//	output << "TT PID CT IO_D WT RT TRT\n";
-//
-//	/*selectionSort(trmList);*/
-//
-//	int sumWT = 0, sumRT = 0, sumTRT = 0;
-//
-//	for (int i = 0; i < trmList->getLength(); i++) {
-//		trmList->getItem(i)->setRT();
-//		trmList->getItem(i)->setTRT();
-//		trmList->getItem(i)->setWT();
-//
-//		sumWT += trmList->getItem(i)->getWT();
-//		sumRT += trmList->getItem(i)->getRT();
-//		sumTRT += trmList->getItem(i)->getTRT();
-//
-//
-//		output << trmList->getItem(i)->getTT() << " " << trmList->getItem(i)->getPID() << " " << trmList->getItem(i)->getCPUtime() << " " << trmList->getItem(i)->getTotal_IOD() << " ";
-//		output << trmList->getItem(i)->getWT() << " " << trmList->getItem(i)->getRT() << " " << trmList->getItem(i)->getTRT() << "\n";
-//	}
-//
-//	avgWT = sumWT / numOFProcesses;
-//	avgRT = sumRT / numOFProcesses;
-//	avgTRT = sumTRT / numOFProcesses;
-//
-//	output << "Processes: " << numOFProcesses << "\n";
-//	output << "AVG WT = " << avgWT << "   " << "AVG RT = " << avgRT << "   " << "AVG TRT = " << avgTRT << "\n";
-//
-//	output << "Migration %: " << "\n";
-//	output << "Work Steal %: " << "\n";
-//	output << "Forked Processes %: " << "\n";
-//	output << "Killed Processes %: " << "\n" << "\n";
-//
-//	output << "Processors: " << (numFCFS + numSJF + numRR) << " [" << numFCFS << " FCFS, " << numSJF << " SJF, " << numRR << " RR]\n";
-//
-//	output << "Processors Load\n";
-//	output << "P1: " << "P1: " << "P1: " << "P1: " << "\n";
-//
-//	output << "Processors Utiliz\n";
-//	output << "P1: " << "P1: " << "P1: " << "P1: " << "\n";
-//
-//	output << "AVG Utilization = ";
-//
-//
-//
-//
-//	output.close();
-//}
-//
+void Scheduler::print()
+{
+	ofstream outfile;
+	outfile.open("output.txt");
+
+	// Write first line
+	outfile << "TT" << " " << "pid" << " " << "AT" << " " << "CT" << " " << "iod" << " " << "WT" << " " << "RT" << " " << "TRT\n";
+	int s = TRM_Process_List.Count();
+	// calculating averges 
+	double sum_WT = 0;
+	double sum_RT = 0;
+	double sum_TRT = 0;
+	for (int i = 0; i < s; i++) {
+		Process* Process_to_be_written;
+		TRM_Process_List.Dequeue(Process_to_be_written);
+		sum_RT = sum_RT + Process_to_be_written->get_response_time();
+		sum_WT = sum_WT + Process_to_be_written->get_Waiting_t();
+		sum_TRT = sum_TRT + Process_to_be_written->get_turnaround_duration();
+		outfile << Process_to_be_written->get_termination_time() << " " << Process_to_be_written->get_pid() << " " << Process_to_be_written->get_cpu_time() << " " << Process_to_be_written->get_totalIOD() << " " << Process_to_be_written->get_Waiting_t() << " " << Process_to_be_written->get_response_time()<< " " << Process_to_be_written->get_turnaround_duration() << " \n";
+	}
+	outfile << "---------------------------------------------------------------------\n";
+	outfile << "Number of processes:  " << TRM_Process_List.Count() << "\n";
+	outfile << "---------------------------------------------------------------------\n";
+	outfile << "AVG WT = " << sum_WT / s << "  " << "AVG RT = " << sum_RT / s << "  " << "AVG TRT = " << sum_TRT / s << "  \n";
+	double RTF_ratio = ((RTF) / s) * 100;
+	double maxw_ratio = ((MaxW) / s) * 100;
+	outfile << "Migration % :" << "  " << "RTF : " << abs(RTF_ratio) << "%   MaxW: " << abs(maxw_ratio) << "% \n";
+	outfile << "Work steal %:  " << 100 * abs((worksteal_counter) / s) << "\n";
+	outfile << "Forking %:  " << 100 * abs((forking_counter) / s) << "\n";
+	outfile << "Killing %:  " << 100 * abs((Signal_Kill_List.Count()) / s) << "\n";
+	outfile << "processors: " <<sizeof(Processors_List) << "\n";
+	outfile << "Processors load" << "\n";
+	int no_of_processors = sizeof(Processors_List);
+	for (int i = 0; i < no_of_processors; i++) {
+		Processor* p = Processors_List[i];
+		outfile << "P" << p->get_number() << " : " << 100 * (p->get_busy_T() / sum_TRT) << "   ";
+	}
+	outfile << "\n";
+	outfile << "Processors Utiliz" << "\n";
+	int sum_Utiliz = 0;
+	for (int i = 0; i < no_of_processors; i++) {
+		Processor* p = Processors_List[i];
+		outfile << "P" << p->get_number() << " : " << 100 * (p->get_busy_T() / (p->get_busy_T() + p->get_Idle_T())) << "   ";
+		sum_Utiliz = sum_Utiliz + 100 * (p->get_busy_T() / (p->get_busy_T() + p->get_Idle_T()));
+	}
+	outfile << "average UTILIZ = " << (sum_Utiliz / s) * 100 << "\n";
+	outfile.close();
+
+
+}
+

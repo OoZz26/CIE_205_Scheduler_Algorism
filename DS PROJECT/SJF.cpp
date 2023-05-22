@@ -188,3 +188,36 @@ Process* SJF_processor::get_fIrst_proces()
 	}
 	
 }
+int SJF_processor::get_busy_T()
+{
+	return busy_T;
+}
+
+int SJF_processor::get_Idle_T()
+{
+	return Idle_T;
+}
+
+void SJF_processor::increment_busy_time()
+{
+
+	if (run != NULL) {
+		busy_T++;
+	}
+	else
+	{
+		Idle_T++;
+	}
+
+}
+
+int SJF_processor::get_number()
+{
+	return number;
+}
+
+void SJF_processor::set_number(int n)
+{
+	number = n;
+}
+
