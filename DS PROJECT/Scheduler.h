@@ -67,6 +67,7 @@ public:
 	int SQF(Processor* p);
 	~Scheduler();
 	void print(Queue<Process*> TRM_Process_List);
+	void Run_to_TRM(int step);
 
 };
 
