@@ -12,9 +12,9 @@ Scheduler::Scheduler()
 
 void Scheduler::Create_Processors(int noOf_FCFS, int noOF_SJF, int noOF_RR, int Timeslice)
 {
-	int counter_noOf_FCFS = 1;
-	int counter_noOf_SJF = 1;
-	int counter_noOf_RR = 1;
+	int counter_noOf_FCFS = 0;
+	int counter_noOf_SJF = 0;
+	int counter_noOf_RR = 0;
 	size = noOf_FCFS + noOF_SJF + noOF_RR;
 	Processors_List = new Processor * [size];
 	int index = 0;
@@ -298,6 +298,38 @@ Processor* Scheduler::get_longest_processor() {
 	return Processors_List[0];
 }
 
+void Scheduler::Run_to_TRM(int step)
+{
+	for (int  i = 0; i < size; i++)
+	{
+		Process* R = Processors_List[i]->get_run();
+		if (R != nullptr) {
+			if (R->get_remainnig_time() == 0) {
+
+				/*remove_from_RDY(Run);*/
+				TRM_Process_List.Enqueue(R);
+				if (R->get_child_pointer() != nullptr) {
+					TRM_Process_List.Enqueue(R->get_child_pointer());
+					R->set_state(4);
+					R->set_child_pointer(nullptr);
+				}
+				
+				Processors_List[i]->set_run(nullptr);
+
+			}
+		}
+
+	}
+	
+
+}
+
+
+
+
+
+
+	
 
 
 
@@ -343,7 +375,7 @@ void Scheduler::Simulate()
 
 
 		
-		pUI->output(this);
+		pUI->output(this); 
 		t_Step++;
 
 
@@ -416,7 +448,7 @@ Scheduler::~Scheduler()
 	delete[] Processors_List;  // Delete the array itself
 
 }
-//
+
 //void Scheduler::print(Queue<Process*> TRM_Process_List)
 //{
 //	ofstream output;
