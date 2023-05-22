@@ -4,6 +4,7 @@
 #include<string>
 #include <sstream>
 #include"..\Data Structures\QUEUE.h"
+#include"../Struct.h"
 using namespace std;
 class Process
 {
@@ -20,10 +21,7 @@ private:
     int io_request_time;
     int io_duration;
     bool has_Forked_before = false;
-    struct io_request {
-        int io_duration;
-        int io_request_time;
-    };
+    
     Queue<io_request> io_requests;
     Queue<string> pairs_io_request;
     Process* child_pointr = nullptr;
@@ -33,13 +31,16 @@ private:
     State state;
 public:
     io_request req;
-    
-    Process(int arrival_time, int pid, int cpu_time, int io_request_number, int* io_durations, int* io_request_times);
 
-    Process(int arrival_time, int pid, int cpu_time, io_request req);
+    
+    Process(int arrival_time, int pid, int cpu_time, int io_request_number,Queue<io_request> io_requests);
     Process(int arrival_time, int pid, int cpu_time, int io_request_number);
+    Process(); 
+
+  /*  Process(int arrival_time, int pid, int cpu_time, io_request req);
+   
     Process(int arrival_time, int pid, int cpu_time);
-    Process();
+  */
 
 
     // Getters
@@ -59,7 +60,7 @@ public:
     void set_waiting_time(int waiting_time);
     void set_state(int state);
     void set_iorequest();
-    Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);
+    /*Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);*/
     bool check_io_request(int current_time);
 
     int get_remainnig_time();

@@ -60,7 +60,7 @@ public:
     void PrintQueue() const;
     int Count() const;
     Node1<T>* GetFront() { return frontPtr; }
-    ~Queue();
+    //~Queue();
 
 };
 
@@ -141,19 +141,19 @@ int Queue<T>::Count() const
     return count;
 }
 
-template <typename T>
-Queue<T>::~Queue()
-{
-    cout << "\nStarting LinkedQueue destructor...";
-    cout << "\nFreeing all nodes in the queue...";
-
-    //Free all nodes in the queue
-    T temp;
-    while (Dequeue(temp));
-
-    cout << "\nIs LinkedQueue Empty now?? ==> " << boolalpha << IsEmpty();
-    cout << "\nEnding LinkedQueue destructor..." << endl;
-}
+//template <typename T>
+//Queue<T>::~Queue()
+//{
+//    cout << "\nStarting LinkedQueue destructor...";
+//    cout << "\nFreeing all nodes in the queue...";
+//
+//    //Free all nodes in the queue
+//    T temp;
+//    while (Dequeue(temp));
+//
+//    cout << "\nIs LinkedQueue Empty now?? ==> " << boolalpha << IsEmpty();
+//    cout << "\nEnding LinkedQueue destructor..." << endl;
+//}
 
 
 

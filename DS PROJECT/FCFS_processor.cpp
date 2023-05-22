@@ -19,13 +19,14 @@ void FCFS_processor::add_process(Process* p)
 void FCFS_processor::remove_process(int id)
 {
 
-	if (run->get_pid() == id) {
+	/*if (run->get_pid() == id) {
 		run->set_state(4);
 		run = nullptr;
 		return;
 	}
 	else {
-		Node<Process*>* F = FCFS_linked_list.GetHead();
+		Node<Process*>* F;
+		FCFS_linked_list.GetHead(F);
 		Process* m = nullptr;
 		if (F->getItem()->get_pid() == id) {
 			m = FCFS_linked_list.Front();
@@ -36,20 +37,20 @@ void FCFS_processor::remove_process(int id)
 
 			return;
 		}
-		while (F->getNext()->getNext() != nullptr)
+		while (F->getNext(F)->getNext(F) != nullptr)
 		{
-			if (F->getNext()->getItem()->get_pid() == id) {
-				m = F->getNext()->getItem();
-				F->setNext(F->getNext()->getNext());
+			if (F-getNext(F)->getItem()->get_pid() == id) {
+				m = F->getNext(F)->getItem();
+				F->setNext(F->getNext(F)->getNext());
 				m->set_state(4);
 				ss->Add_to_TRM(m);
 				break;
 
 			}
-			F = F->getNext();
+			F->getNext(F);
 		}
 	}
-	cout << endl;
+	cout << endl;*/
 
 
 	/*counter--;
@@ -205,12 +206,14 @@ void FCFS_processor::set_run(Process* p)
 void FCFS_processor::PrintReady()
 {
 
-	Node<Process*>* F = FCFS_linked_list.GetHead();
+	Node<Process*>* F;
+	FCFS_linked_list.GetHead(F);
 	cout << FCFS_linked_list.GetCount() << " RDY: ";
 	while (F != nullptr)
 	{
 		cout << F->getItem()->get_pid() << ", ";
-		F = F->getNext();
+		F->getItem();
+		F->getNext(F);
 	}
 	cout << endl;
 }
@@ -218,13 +221,14 @@ void FCFS_processor::PrintReady()
 
 int FCFS_processor::RDY_Duration()
 {
-	Node<Process*>* F = FCFS_linked_list.GetHead();
+	Node<Process*>* F;
+	 FCFS_linked_list.GetHead(F);
 	int cts = 0;
 
 	while (F != nullptr)
 	{
 		cts += F->getItem()->get_cpu_time();
-		F = F->getNext();
+		F->getNext(F);
 	}
 	return cts;
 }

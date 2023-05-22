@@ -26,15 +26,20 @@ void UI::output(Scheduler* sched) {
     Processor** plist = sched->GetProcessorList();
     Queue<string> RunList;
 
-    for (int i = 1; i < sizeof(plist) + 1; i++)
+    for (int i = 1; i < sched->size + 1; i++)
     {
         cout << "Processor " << i;
         cout << " [" << plist[i - 1]->Processor_Type() << "]: ";
         plist[i - 1]->PrintReady();
         Process* run = plist[i - 1]->get_run();
-        int id = run->get_pid();
-        string run_P = to_string(id) + "(P" + to_string(i) + ")";
-        RunList.Enqueue(run_P);
+        if (run)
+        {
+            int id = run->get_pid();
+            string run_P = to_string(id) + "(P" + to_string(i) + ")";
+            RunList.Enqueue(run_P);
+        }
+        
+        
     }
 
     cout << endl;

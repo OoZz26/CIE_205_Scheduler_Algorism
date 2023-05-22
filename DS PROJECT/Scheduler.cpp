@@ -1,7 +1,7 @@
 #pragma once
 #include "Scheduler.h"
 #include"Processors/Processor.h"
-
+#include"Struct.h"
 #include <iostream>
 using namespace std;
 Scheduler::Scheduler()
@@ -9,134 +9,131 @@ Scheduler::Scheduler()
 	t_Step = 1;
 
 }
-void Scheduler::LoadData(string filename)
-{
 
+void Scheduler::Create_Processors(int noOf_FCFS, int noOF_SJF, int noOF_RR, int Timeslice)
+{
 	int counter_noOf_FCFS = 1;
 	int counter_noOf_SJF = 1;
 	int counter_noOf_RR = 1;
-	int currenLine = 1;
-	fstream Myfile;
-	Myfile.open(filename, ios::in);
-	if (Myfile.is_open())
+	size = noOf_FCFS + noOF_SJF + noOF_RR;
+	Processors_List = new Processor * [size];
+	int index = 0;
+	
+
+	for (int i = 0; i < noOf_FCFS; i++)
 	{
-
-		while (!Myfile.eof())
-		{
-			if (currenLine == 1)
-			{
-				Myfile >> noOf_FCFS >> noOF_SJF >> noOF_RR;
-				currenLine += 1;
-				const int size = noOf_FCFS + noOF_SJF + noOF_RR;
-				Processors_List = new Processor * [size];
-				int index = 0;
-
-				for (int i = 0; i < noOf_FCFS; i++)
-				{
-					FCFS_processor* P = new FCFS_processor(counter_noOf_FCFS, this);
-					Processors_List[index] = P;
-					index++;
-					counter_noOf_FCFS += 1;
-
-				}
-				for (int i = 0; i < noOF_SJF; i++)
-				{
-					SJF_processor* P = new SJF_processor(counter_noOf_SJF, this);
-					counter_noOf_SJF += 1;
-					Processors_List[index] = P;
-					index++;
-				}
-				for (int i = 0; i < noOF_RR; i++)
-				{
-					RR_processor* R = new RR_processor(counter_noOf_RR, this, Timeslice);
-					counter_noOf_RR += 1;
-					Processors_List[index] = R;
-					index++;
-				}
-
-			}
-			if (currenLine == 2)
-			{
-				Myfile >> Timeslice;
-				currenLine += 1;
-			}
-			if (currenLine == 3)
-			{
-				Myfile >> RTF >> MaxW >> STL >> ForkPROB;
-				currenLine += 1;
-			}
-			if (currenLine == 4)
-			{
-				Myfile >> NumofProcess;
-				currenLine += 1;
-
-
-			}
-			if (currenLine > 4 && currenLine <= NumofProcess + 4)
-			{
-
-
-				for (int i = 0; i < NumofProcess; i++)
-				{
-					
-					if (Myfile.eof())
-					{
-						break;
-					}
-					else
-					{
-						Queue<string> Pairs_of_io;
-						string x;
-						Myfile >> AT >> PID >> CT >> N;
-						if (N > 0)
-						{
-							for (int i = 0; i < N; i++)
-							{
-								Myfile >> x;
-								Pairs_of_io.Enqueue(x);
-
-							}
-						}
-
-
-						Process* Processes = new Process(AT, PID, CT, N);
-						New_Process_List.Enqueue(Processes);
-						currenLine += 1;
-
-					}
-
-				}
-			}
-
-
-			if (currenLine > 4 + NumofProcess)
-			{
-
-				while (!Myfile.eof())
-				{
-					Myfile >> SPID >> T;
-					SIGKILL S;
-					S.SKPID = SPID;
-					S.ST = T;
-					Signal_Kill_List.Enqueue(S);
-					noOf_Signal_Kill += 1;
-
-				}
-
-			}
-		}
-
-		Myfile.close();
+		FCFS_processor* P = new FCFS_processor(counter_noOf_FCFS, this);
+		Processors_List[index] = P;
+		index++;
+		counter_noOf_FCFS ++;
 
 	}
-	else
+	for (int i = 0; i < noOF_SJF; i++)
 	{
-		cout << "file faild to open";
+		SJF_processor* P = new SJF_processor(counter_noOf_SJF, this);
+		counter_noOf_SJF ++;
+		Processors_List[index] = P;
+		index++;
 	}
-
-
-
+	for (int i = 0; i < noOF_RR; i++)
+	{
+		RR_processor* R = new RR_processor(counter_noOf_RR, this, Timeslice);
+		counter_noOf_RR ++;
+		Processors_List[index] = R;
+		index++;
+	}
 }
+
+
+void Scheduler::LoadData(string filename) {
+    ifstream infile(filename);
+
+    if (!infile.is_open()) {
+        std::cerr << "Error opening file." << std::endl;
+        exit(1);
+    }
+	else {
+		// Read Processors, General Info  --> The first three lines 
+		int num_FCFS, num_SJF, num_RR, timeSlice_RR, rtf, Maxw, stl, Forkprobability;
+		infile >> num_FCFS >> num_SJF >> num_RR >> timeSlice_RR >> rtf >> Maxw >> stl >> Forkprobability;
+		RTF = rtf; MaxW = Maxw; STL = stl;  ForkPROB = Forkprobability;
+		noOf_FCFS = num_FCFS; noOF_SJF = num_SJF; noOF_RR = num_RR;
+		Create_Processors(num_FCFS, num_SJF, num_RR, timeSlice_RR);
+
+		// Read Processes Info -->
+		int numProcesses;
+		infile >> numProcesses;
+
+
+		NumofProcess = numProcesses;
+		/*UniqueChildID = numOFProcesses + 1;*/
+		char l;  // to end the line and go to the next one
+		infile.get(l);
+
+		string line;
+
+		int IO_R, IO_D;
+		char comma, space;
+
+		for (int i = 0; i < numProcesses; i++) {
+
+
+			getline(infile, line);
+
+			int val1, val2, val3, val4;
+			// extract the first four values
+			istringstream ss_first_four(line);
+			if (ss_first_four.fail()) {
+				continue;
+			}
+			else {
+				ss_first_four >> val1 >> val2 >> val3 >> val4;
+			}
+
+			Queue<io_request> io_requests;
+
+			int totalIOD_File = 0;
+			for (int g = 0; g < val4; g++) {
+
+				// find the start and end positions of the round brackets
+				size_t start_pos = line.find("(");
+				size_t end_pos = line.find(")");
+
+				// create a string stream and extract the values
+				std::istringstream ss(line.substr(start_pos + 1, end_pos - start_pos - 1));
+
+				ss >> IO_R >> comma >> IO_D >> space;
+
+				io_request req = { IO_R, IO_D };
+				io_requests.Enqueue(req);
+				totalIOD_File += IO_D;
+			}
+
+
+
+
+			Process* P = new Process(val1, val2, val3, val4, io_requests);
+			New_Process_List.Enqueue(P);
+			
+		}
+		
+		/*int KillTime, ProcessID;
+
+		while (!infile.eof()) {
+			infile >> KillTime >> ProcessID;
+			SIGKILL k = { KillTime, ProcessID };
+			Signal_Kill_List.Enqueue(k);
+			noOf_Signal_Kill++;
+		}*/
+		if (infile.is_open()) {
+			infile.close();
+		}
+		
+	}
+}
+
+
+
 void Scheduler::Dispaly_New_Process_List()
 {
 	for (int i = 0; i < NumofProcess; i++)
@@ -149,6 +146,7 @@ void Scheduler::Dispaly_New_Process_List()
 		cout << "CPU Time is" << " " << P->get_cpu_time() << endl;
 		cout << "no of io req is" << " " << P->get_io_request_number() << endl;
 		cout << "------------------------------------------------------" << endl;
+		New_Process_List.Enqueue(P);
 	}
 
 
@@ -212,11 +210,10 @@ int Scheduler::GettimeStep()
 }
 
 Processor* Scheduler::get_shortest_processor() {
-	const int p_count = sizeof(Processors_List);
+	 int p_count = size;
 
 	int* array_CTs = new int[p_count];
-	int i = 0;
-
+	
 
 	for (int i = 0; i < p_count; i++)
 	{
@@ -226,17 +223,16 @@ Processor* Scheduler::get_shortest_processor() {
 	}
 
 	int min = array_CTs[0];
+	int index = 0;
 	for (int i = 0; i < p_count; i++) {
 		if (array_CTs[i] < min) {
+
 			min = array_CTs[i];
+			index = i;
 		}
 	}
-	for (int i = 0; i < p_count; i++) {
-		if (Processors_List[i]->RDY_Duration() == min) {
-			return Processors_List[i];
-		}
-	}
-	return Processors_List[0];
+	return Processors_List[index];
+
 }
 
 Processor* Scheduler::get_shortest_FCFS()
@@ -309,11 +305,16 @@ Processor* Scheduler::get_longest_processor() {
 void Scheduler::Simulate()
 {
 	UI* pUI = new UI();
+	pUI->print_message("Enter the name of the file you would to load from: ");
+	string fileName;
+	cin >> fileName;
+	LoadData(fileName + ".txt");
+	Dispaly_New_Process_List();
 
 	int counter_for_processors = 0;
-	pUI->print_message("Please choose the mode you want\n 1- for Interactive Mode \n 2- for Step by Step Mode \n 3- for Silent Mode");
+	/*pUI->print_message("Please choose the mode you want\n 1- for Interactive Mode \n 2- for Step by Step Mode \n 3- for Silent Mode");
 	int mode;
-	cin >> mode;
+	cin >> mode;*/
 
 
 	pUI->print_message("---------------------------------------------------------------------------------------------");
@@ -328,6 +329,10 @@ void Scheduler::Simulate()
 				New_Process_List.Dequeue(p);
 
 				get_shortest_processor()->add_process(p); // adding the procecess to the least time processor
+				for (int i = 0; i < sizeof(Processors_List); i++) {
+					Processors_List[i]->ScheduleAlgo();
+				}
+
 
 			}
 		}
@@ -338,7 +343,8 @@ void Scheduler::Simulate()
 
 
 		
-		
+		pUI->output(this);
+		t_Step++;
 
 
 	}
@@ -410,7 +416,57 @@ Scheduler::~Scheduler()
 	delete[] Processors_List;  // Delete the array itself
 
 }
-
-
-
-
+//
+//void Scheduler::print(Queue<Process*> TRM_Process_List)
+//{
+//	ofstream output;
+//	output.open("OUTPUT.txt", ios::trunc);
+//
+//	output << "TT PID CT IO_D WT RT TRT\n";
+//
+//	/*selectionSort(trmList);*/
+//
+//	int sumWT = 0, sumRT = 0, sumTRT = 0;
+//
+//	for (int i = 0; i < trmList->getLength(); i++) {
+//		trmList->getItem(i)->setRT();
+//		trmList->getItem(i)->setTRT();
+//		trmList->getItem(i)->setWT();
+//
+//		sumWT += trmList->getItem(i)->getWT();
+//		sumRT += trmList->getItem(i)->getRT();
+//		sumTRT += trmList->getItem(i)->getTRT();
+//
+//
+//		output << trmList->getItem(i)->getTT() << " " << trmList->getItem(i)->getPID() << " " << trmList->getItem(i)->getCPUtime() << " " << trmList->getItem(i)->getTotal_IOD() << " ";
+//		output << trmList->getItem(i)->getWT() << " " << trmList->getItem(i)->getRT() << " " << trmList->getItem(i)->getTRT() << "\n";
+//	}
+//
+//	avgWT = sumWT / numOFProcesses;
+//	avgRT = sumRT / numOFProcesses;
+//	avgTRT = sumTRT / numOFProcesses;
+//
+//	output << "Processes: " << numOFProcesses << "\n";
+//	output << "AVG WT = " << avgWT << "   " << "AVG RT = " << avgRT << "   " << "AVG TRT = " << avgTRT << "\n";
+//
+//	output << "Migration %: " << "\n";
+//	output << "Work Steal %: " << "\n";
+//	output << "Forked Processes %: " << "\n";
+//	output << "Killed Processes %: " << "\n" << "\n";
+//
+//	output << "Processors: " << (numFCFS + numSJF + numRR) << " [" << numFCFS << " FCFS, " << numSJF << " SJF, " << numRR << " RR]\n";
+//
+//	output << "Processors Load\n";
+//	output << "P1: " << "P1: " << "P1: " << "P1: " << "\n";
+//
+//	output << "Processors Utiliz\n";
+//	output << "P1: " << "P1: " << "P1: " << "P1: " << "\n";
+//
+//	output << "AVG Utilization = ";
+//
+//
+//
+//
+//	output.close();
+//}
+//

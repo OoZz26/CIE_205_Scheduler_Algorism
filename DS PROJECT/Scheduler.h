@@ -43,8 +43,11 @@ public:
 	int Timeslice;
 	int RTF, MaxW, STL, ForkPROB;
 	int SPID, T;
+	int size;
+	int Sizeofprocessorsarray;
 
 	void LoadData(string filename);
+	void Create_Processors(int noOf_FCFS, int noOF_SJF, int noOF_RR, int Timeslice);
 	void Dispaly_New_Process_List();
 	
 	void Add_to_BLK(Process* p);
@@ -63,6 +66,7 @@ public:
 	int LQF(Processor* p);
 	int SQF(Processor* p);
 	~Scheduler();
+	void print(Queue<Process*> TRM_Process_List);
 
 };
 

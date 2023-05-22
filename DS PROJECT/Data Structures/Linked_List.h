@@ -38,13 +38,16 @@ public:
 		return item;
 	} // end getItem
 
-	Node<T>* getNext() const
+	bool getNext(Node<T>* &Y) 
 	{
 		if (next) {
-			return next;
+			Y = next;
+			return true;
 		}
 		else {
-			throw;
+			Y = nullptr;
+			return false;
+			
 		}
 	}
 }; // end Node
@@ -79,11 +82,15 @@ public:
 	*/
 
 
-	Node<T>* GetHead() {
-		if (Head)
-			return Head;
-		else
-			throw;
+	bool GetHead(Node<T>* &Y) {
+		if (!ISEMPTY()) {
+			Y = Head;
+			return true;
+		}
+		else {
+			Y = nullptr;
+			return false;
+		}
 	}
 	bool ISEMPTY() {
 		if (Head == nullptr) {
@@ -134,7 +141,7 @@ public:
 		Node<T>* P = Head;
 		while (Head)
 		{
-			P = Head->getNext();
+			Head->getNext(P);
 			delete Head;
 			Head = P;
 		}
@@ -158,9 +165,9 @@ public:
 		else
 		{
 			Node<T>* P = Head;
-			while (P->getNext() != NULL)
+			while (P->getNext(P) != NULL)
 			{
-				P = P->getNext();
+				P->getNext(P);
 			}
 
 			P->setNext(newNode);
@@ -217,10 +224,10 @@ public:
 
 	void DeleteFirst()
 	{
-		if(Head->getNext()){ 
+		if(Head->getNext(Head)){
 			Node<T>* delptr;
 			delptr = Head;
-			Head = Head->getNext(); 
+			Head->getNext(Head);
 			delete delptr;
 			count--;
 		}
