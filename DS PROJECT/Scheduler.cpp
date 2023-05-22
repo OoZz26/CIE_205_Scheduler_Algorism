@@ -214,6 +214,40 @@ Processor* Scheduler::get_shortest_processor() {
 	return Processors_List[0];
 }
 
+Processor* Scheduler::get_shortest_FCFS()
+{
+	const int p_count = sizeof(Processors_List);
+
+	int* array_CTs = new int[noOf_FCFS];
+	for (int j = 0; j < p_count; j++)
+	{
+
+		if (Processors_List[j]->Processor_Type() == "FCFS_processor") {
+			for (int i = 0; i < noOf_FCFS; i++)
+			{
+
+				array_CTs[i] = Processors_List[i]->RDY_Duration();
+
+			}
+
+			int min = array_CTs[0];
+			for (int i = 0; i < noOf_FCFS; i++) {
+				if (array_CTs[i] < min) {
+					min = array_CTs[i];
+				}
+			}
+			for (int i = 0; i < noOf_FCFS; i++) {
+				if (Processors_List[i]->RDY_Duration() == min) {
+					return Processors_List[i];
+				}
+			}
+		}
+	}
+	
+	return nullptr;
+}
+
+
 
 Processor* Scheduler::get_longest_processor() {
 	const int p_count = sizeof(Processors_List);
@@ -283,9 +317,29 @@ void Scheduler::Simulate()
 
 
 	}
-
+	
 
 }
+
+void Scheduler::Fork(int step, int forkprob , Processor* processor)
+{
+	srand(time(nullptr));
+	if (processor->Processor_Type() == "FCFS_processor" && processor->get_run() != NULL && processor->get_run()->get_has_forked() != true) { // to make sure that the processor is FCFS and has a run currently and its run hadn't forked before 
+		int random_number = rand() % 100;
+		if (random_number <= forkprob) {
+			// making a new process and add it to the shortestFCFS RDY list
+			int random_Forked_pid = 900 + (std::rand() % 1000); // new pid (should be random ) for forked 
+			Process* p = new Process(step, random_Forked_pid, processor->get_run()->get_remainnig_time(), 0); // setting new processs arguments 
+			processor->get_run()->set_child_pointer(p); // setting the child pointer of the parent process to the new forked process
+			processor->get_run()->set_has_forked(true); // setting the has forked to true
+			Processor* x = get_shortest_FCFS();
+			x->add_process(p);
+
+		}
+	}
+}
+
+
 
 	
 
