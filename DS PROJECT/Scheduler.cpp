@@ -356,6 +356,21 @@ void Scheduler::BLK_TO_RDY()
 	delete TMP;
 }
 
+void Scheduler::incrementBLKcounters()
+{
+	Queue<Process*>* TMP = new Queue<Process*>;
+	Process* empty;
+	while (BLK_Process_List.Dequeue(empty)) {
+		empty->increament_BLK_counter();
+		TMP->Enqueue(empty);
+	}
+
+	while (TMP->Dequeue(empty)) {
+		BLK_Process_List.Enqueue(empty);
+	}
+	delete TMP;
+
+}
 
 
 

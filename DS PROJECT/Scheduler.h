@@ -70,6 +70,7 @@ public:
 	void Run_to_TRM(int step);
 	void RUN_TO_BLK();
 	void BLK_TO_RDY();
+	void incrementBLKcounters();
 
 };
 
