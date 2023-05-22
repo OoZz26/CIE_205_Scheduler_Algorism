@@ -246,5 +246,43 @@ Process* FCFS_processor::get_fIrst_proces()
 		return nullptr;
 	}
 }
+void FCFS_processor::KillProcess(int pid, int killtime) {
 
+	Process* KilledP = nullptr;
+
+	if (run != nullptr && run->get_pid() == pid && ss->GettimeStep() == killtime) {
+		KilledP =run;
+
+		run = nullptr;
+		SIGKILL s1;
+		ss->Signal_Kill_List.Dequeue(s1);
+
+
+		
+		ss->Add_to_TRM(KilledP);
+	}
+	else {
+		
+		for (int i = 0; i < FCFS_linked_list.GetCount(); i++)
+		{
+			Node<Process*>* F = nullptr;
+			FCFS_linked_list.GetHead(F);
+
+
+			if (F->getItem()->get_pid() == pid)
+			{
+				KilledP = F->getItem();
+				FCFS_linked_list.DeleteNode(KilledP);
+				KilledP->set_state(4);
+				ss->Add_to_TRM(KilledP);
+			}
+			else {
+				FCFS_linked_list.DeleteFirst();
+				FCFS_linked_list.InsertEnd(F->getItem());
+			}
+		}
+	}
+
+
+}
 

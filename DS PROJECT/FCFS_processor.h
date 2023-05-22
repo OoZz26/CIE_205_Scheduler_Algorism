@@ -29,5 +29,6 @@ public:
 	void PrintReady() override;
 	int RDY_Duration() override;
 	Process* get_fIrst_proces() override;
+	void KillProcess(int pid, int killtime);
 };
 

@@ -162,9 +162,37 @@ void Scheduler::Add_to_TRM(Process* p)
 
 }
 
-void Scheduler::KILLSIG()
+void Scheduler::Check_KILLSIG()
 {
-	Node1<SIGKILL>* Sig = Signal_Kill_List.GetFront();
+	Process* p = nullptr;
+	Processor* p1 = nullptr;
+	SIGKILL s;
+	Signal_Kill_List.Peek(s);
+	int ptime = s.ST;
+	int pid = s.SKPID;
+	while (Signal_Kill_List.Count() != 0)
+	{
+		if (ptime == t_Step && p1->get_run()->get_pid() == pid)
+		{
+			if (p1->Processor_Type() == "FCFS_processor")
+			{
+				FCFS_processor* pro = nullptr;
+				Signal_Kill_List.Dequeue(s);
+
+				
+				int p = s.SKPID;
+				int t = s.ST;
+				pro->KillProcess(p, t);
+			}
+		}
+		else {
+			return;
+		}
+	}
+
+
+
+	/*Node1<SIGKILL>* Sig = Signal_Kill_List.GetFront();
 	if (Signal_Kill_List.IsEmpty()) {
 		return;
 	}
@@ -184,7 +212,7 @@ void Scheduler::KILLSIG()
 		else {
 			return;
 		}
-	}
+	}*/
 }
 
 Processor** Scheduler::GetProcessorList() const
@@ -360,7 +388,7 @@ void Scheduler::BLK_TO_RDY()
 
 
 
-void Scheduler::Run_to_TRM(int step)
+void Scheduler::Run_to_TRM()
 {
 	for (int  i = 0; i < size; i++)
 	{

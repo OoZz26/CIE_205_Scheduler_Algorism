@@ -4,3 +4,8 @@ struct io_request {
     int io_duration;
     
 };
+struct SIGKILL
+{
+	int SKPID;
+	int  ST;
+};
