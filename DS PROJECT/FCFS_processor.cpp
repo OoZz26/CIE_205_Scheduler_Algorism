@@ -56,6 +56,10 @@ void FCFS_processor::remove_process(int id)
 	FCFS_linked_list.DeleteNode(p);*/
 }
 
+void Processor::addToTerminatedList(Process* p) {
+	TRM_Process_List.Enqueue(p);
+}
+
 void FCFS_processor::ScheduleAlgo()
 {
 	if (FCFS_linked_list.ISEMPTY() && IS_IDLE()) {

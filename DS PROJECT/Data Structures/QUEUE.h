@@ -41,6 +41,13 @@ public:
 	{
 		return next;
 	}
+
+
+    T* GetItemReference() const
+    {
+        return &item;
+    } // end getItem
+
 };// end Node1
 
 template <typename T>
@@ -112,6 +119,8 @@ bool Queue<T>::Dequeue(T& frntEntry)
     count--;
     return true;
 }
+
+
 
 template <typename T>
 bool Queue<T>::Peek(T& frntEntry) const
