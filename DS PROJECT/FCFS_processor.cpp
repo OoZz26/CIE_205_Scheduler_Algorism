@@ -69,17 +69,17 @@ void FCFS_processor::ScheduleAlgo()
 		return;
 	}
 	if (!IS_IDLE()) {
-		if (run->check_io_request(run->get_cpu_time())) {
+		if (run->check_io_request(run->get_remainnig_time())) {
 			run->set_state(3);
-			run->set_cpu_time(run->get_cpu_time() - 1);
+			run->set_remainnig_time(run->get_remainnig_time() - 1);
 			ss->Add_to_BLK(run);
 			run = nullptr;
 			return;
 
 		}
-		if (run->get_cpu_time() == 0) {
+		if (run->get_remainnig_time() == 0) {
 			run->set_state(4);
-			run->set_cpu_time(run->get_cpu_time() - 1);
+			run->set_remainnig_time(run->get_remainnig_time() - 1);
 			ss->Add_to_TRM(run);
 			run = nullptr;
 			return;
@@ -87,7 +87,7 @@ void FCFS_processor::ScheduleAlgo()
 		}
 		else {
 			
-			run->set_cpu_time(run->get_cpu_time() - 1);
+			run->set_remainnig_time(run->get_remainnig_time() - 1);
 			return;
 		}
 

@@ -59,7 +59,12 @@ public:
     bool Peek(T& frntEntry) const;
     void PrintQueue() const;
     int Count() const;
-    Node1<T>* GetFront() { return frontPtr; }
+    bool GetFront(Node1<T>* &p) {
+        if (frontPtr) {
+            p = frontPtr;
+            return true;
+        }      return false;
+    }
     //~Queue();
 
 };

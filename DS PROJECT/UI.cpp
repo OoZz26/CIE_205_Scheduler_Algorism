@@ -49,7 +49,7 @@ void UI::output(Scheduler* sched) {
     Queue<Process*> blklist = sched->GetBLKList();
 
 
-    Node1<Process*>* B = blklist.GetFront();
+    Node1<Process*>* B = nullptr; blklist.GetFront(B);
     cout << blklist.Count() << " BLK: ";
     while (B != nullptr)
     {
@@ -64,7 +64,8 @@ void UI::output(Scheduler* sched) {
 
 
 
-    Node1<string>* RL = RunList.GetFront();
+    Node1<string>* RL =nullptr ;
+    RunList.GetFront(RL);
     cout << RunList.Count() << " Run: ";
     while (RL != nullptr)
     {
@@ -78,7 +79,8 @@ void UI::output(Scheduler* sched) {
     Queue<Process*> trmlist = sched->GetTRMList();
 
 
-    Node1<Process*>* TL = trmlist.GetFront();
+    Node1<Process*>* TL = nullptr;
+        trmlist.GetFront(TL);
     cout << trmlist.Count() << " TRM: ";
     while (TL != nullptr)
     {
