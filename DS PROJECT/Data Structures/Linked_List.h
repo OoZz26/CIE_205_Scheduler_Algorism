@@ -272,7 +272,7 @@ public:
 
 			}
 
-			Temp = Temp->getNext();
+			Temp->getNext(Temp);
 
 		}
 		if (found != 0)
@@ -281,7 +281,7 @@ public:
 			if (Head->getItem() == item)
 			{
 				delptr = Head;
-				Head = Head->getNext();
+				Head->getNext(Head);
 				delete delptr;
 			}
 			else
@@ -291,9 +291,10 @@ public:
 				while (delptr->getItem() != item)
 				{
 					prev = delptr;
-					delptr = delptr->getNext();
+					delptr->getNext(delptr);
 				}
-				prev->setNext(delptr->getNext());
+				delptr->getNext(delptr);
+				prev->setNext(delptr);
 				delete delptr;
 			}
 			F = true;

@@ -1,8 +1,5 @@
 #pragma once
 #include<string>
-#include "stdafx.h"
-#include <time.h> // required for time
-#include <cstdlib> //required for srand and rand
 class Scheduler;
  
 
@@ -14,6 +11,9 @@ protected:
     Scheduler* ss= nullptr;
     
     
+
+    Queue<Process*> TRM_Process_List;
+    Queue<Process*> readyQueue;
 
 public:
     Processor(int n, Scheduler* s) {
@@ -43,6 +43,7 @@ public:
     virtual void increment_busy_time() = 0; 
     virtual int get_number() = 0;
 
+    void addToTerminatedList(Process* p);
 
 
 

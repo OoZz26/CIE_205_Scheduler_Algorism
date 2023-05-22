@@ -38,5 +38,6 @@ public:
 	void increment_busy_time() override;
 	int get_number()override;
 	void set_number(int n) override;
+	void KillProcess(int pid, int killtime);
 };
 

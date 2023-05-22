@@ -28,7 +28,11 @@ private:
     Queue<string> pairs_io_request;
     Process* child_pointr = nullptr;
 
-    
+    struct io_request {
+        int io_duration;
+        int io_request_time;
+    };
+
     enum State { NEW, READY, RUNNING, BLOCKED, TERMINATED, ORPHAN };
     State state;
 public:
@@ -38,6 +42,10 @@ public:
     Process(int arrival_time, int pid, int cpu_time, int io_request_number,Queue<io_request> io_requests);
     Process(int arrival_time, int pid, int cpu_time, int io_request_number);
     Process(); 
+
+
+    Process* parent; // Pointer to the parent process
+    Queue<Process*> children; // Queue of pointers to child processes
 
   /*  Process(int arrival_time, int pid, int cpu_time, io_request req);
    
@@ -85,9 +93,14 @@ public:
     void decrement_N_ofIoR();
     
     
-    
-
-   
+    void set_parent(Process* parent);
+    Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);
+    void addChild(Process* child); // Add a child process
+    void removeChild(Process* child); // Remove a child process
+    bool isOrphan() const;
+    Process* get_parent() const;
+    Queue<Process*> getChildren() const;
+    int get_wait_time();
 };
 
 

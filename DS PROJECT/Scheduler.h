@@ -18,16 +18,11 @@ using namespace std;
 class Scheduler
 {
 private:
-	struct SIGKILL
-	{
-		int SKPID;
-		int  ST;
-	};
+
 	Processor** Processors_List;
 	Queue<Process*> New_Process_List;
 	Queue<Process*> BLK_Process_List;
 	Queue<Process*> TRM_Process_List;
-	Queue< SIGKILL> Signal_Kill_List;
 	
 	Queue<int>List;
 	int t_Step;
@@ -36,6 +31,9 @@ private:
 public:
 
 	Scheduler();
+
+	Queue< SIGKILL> Signal_Kill_List;
+
 	int noOf_Signal_Kill = 0;
 	int noOf_FCFS, noOF_SJF, noOF_RR;
 	int AT, PID, CT, N;
@@ -54,7 +52,7 @@ public:
 	
 	void Add_to_BLK(Process* p);
 	void Add_to_TRM(Process* p);
-	void KILLSIG();
+	void Check_KILLSIG();
 	Processor** GetProcessorList() const;
 	Queue<Process*> GetBLKList()const;
 	Queue<Process*> GetTRMList() const;
@@ -68,11 +66,15 @@ public:
 	int LQF(Processor* p);
 	int SQF(Processor* p);
 	~Scheduler();
+	void print(Queue<Process*> TRM_Process_List);
+	void Run_to_TRM();
 	void print();
 	void Run_to_TRM(int step);
 	void RUN_TO_BLK();
 	void BLK_TO_RDY();
 	void incrementBLKcounters();
-
+	void Migrate_RR_to_SJF(Process* p);
+	void Migrate_FCFS_to_RR(Process* p, int MaxW);
+	void killOrphanProcesses(Queue<Processor>& processors);
 };
 

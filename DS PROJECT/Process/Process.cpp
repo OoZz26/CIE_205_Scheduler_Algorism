@@ -56,6 +56,44 @@ Process::Process()
 }
 
 
+Queue<Process::io_request> Process::fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times) {
+    Queue<Process::io_request> io_requests;
+    for (int i = 0; i < io_request_number; i++) {
+        Process::io_request req = { io_durations[i], io_request_times[i] };
+        io_requests.Enqueue(req);
+    }
+    return io_requests;
+}
+
+bool Process::isOrphan() const {
+    // If the parent process is terminated and its childern are still running return true
+    return (parent == nullptr && !children.IsEmpty());
+}
+
+void Process::addChild(Process* child) {
+    children.Enqueue(child);
+}
+
+void Process::removeChild(Process* child) {
+    children.Dequeue(child);
+}
+
+
+// Getters
+
+Queue<Process*> Process::getChildren() const {
+    return children;
+}
+
+Process* Process::get_parent() const {
+    return parent;
+}
+
+int Process::get_wait_time() {
+    return waiting_time = turnaround_duration - arrival_time;
+}
+
+
 // Getters
 int Process::get_pid()
 {
@@ -199,10 +237,6 @@ void Process::set_state(int states)
    
 }
 
-Queue<io_request> Process::get_iorequest()
-{
-    return io_requests;
-}
 
 bool Process::check_io_request(int current_time)
 {
