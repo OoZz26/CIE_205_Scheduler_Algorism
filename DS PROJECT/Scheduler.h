@@ -28,7 +28,7 @@ private:
 	Queue<Process*> BLK_Process_List;
 	Queue<Process*> TRM_Process_List;
 	Queue< SIGKILL> Signal_Kill_List;
-	Queue<string> Pairs_of_io;
+	
 	Queue<int>List;
 	int t_Step;
 	
@@ -46,7 +46,7 @@ public:
 
 	void LoadData(string filename);
 	void Dispaly_New_Process_List();
-	void Display_input_file_Data();
+	
 	void Add_to_BLK(Process* p);
 	void Add_to_TRM(Process* p);
 	void KILLSIG();
@@ -55,7 +55,13 @@ public:
 	Queue<Process*> GetTRMList() const;
 	int GettimeStep();
 	Processor* get_shortest_processor();
+	Processor* get_shortest_FCFS();
+	Processor* get_longest_processor();
 	void Simulate();
+	void Fork(int step, int forkprob, Processor* processor);
+	void work_Steal(int step);
+	int LQF(Processor* p);
+	int SQF(Processor* p);
 	~Scheduler();
 
 };

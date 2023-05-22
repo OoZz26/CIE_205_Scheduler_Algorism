@@ -65,7 +65,6 @@ void FCFS_processor::ScheduleAlgo()
 		run = FCFS_linked_list.Front();
 		FCFS_linked_list.DeleteFirst();
 		run->set_state(2);
-		cout << counter << endl;
 		return;
 	}
 	if (!IS_IDLE()) {
@@ -198,6 +197,11 @@ Process* FCFS_processor::get_run()
 	return run;
 }
 
+void FCFS_processor::set_run(Process* p)
+{
+	this->run = p;
+}
+
 void FCFS_processor::PrintReady()
 {
 
@@ -223,6 +227,19 @@ int FCFS_processor::RDY_Duration()
 		F = F->getNext();
 	}
 	return cts;
+}
+
+Process* FCFS_processor::get_fIrst_proces()
+{
+	
+	if (!FCFS_linked_list.ISEMPTY()) {
+		Process* p = FCFS_linked_list.Front();
+		FCFS_linked_list.DeleteFirst();
+		return p;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 

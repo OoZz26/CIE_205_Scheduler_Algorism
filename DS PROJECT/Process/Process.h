@@ -19,12 +19,14 @@ private:
     int io_request_number;
     int io_request_time;
     int io_duration;
+    bool has_Forked_before = false;
     struct io_request {
         int io_duration;
         int io_request_time;
     };
     Queue<io_request> io_requests;
     Queue<string> pairs_io_request;
+    Process* child_pointr = nullptr;
 
     
     enum State { NEW, READY, RUNNING, BLOCKED, TERMINATED, ORPHAN };
@@ -59,6 +61,12 @@ public:
     void set_iorequest();
     Queue<io_request> fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times);
     bool check_io_request(int current_time);
+
+    int get_remainnig_time();
+    bool get_has_forked();
+    void set_has_forked(bool state);
+    void set_child_pointer(Process* p);
+    Process* get_child_pointer();
     
     
     

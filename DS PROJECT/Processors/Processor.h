@@ -31,11 +31,13 @@ public:
     virtual string Processor_Type() = 0;
 
     virtual Process* get_run() = 0;
+    virtual void set_run(Process* p) = 0;
     virtual void PrintReady() = 0;
 
 
     virtual void remove_process(int  id) = 0;
     virtual int RDY_Duration() = 0;
+    virtual Process* get_fIrst_proces() = 0;
 
 
 

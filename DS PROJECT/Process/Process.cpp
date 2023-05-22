@@ -190,6 +190,27 @@ bool Process::check_io_request(int current_time)
     
    
 }
+int Process::get_remainnig_time()
+{
+    return T_cpu_time;
+}
+bool Process::get_has_forked()
+{
+    return has_Forked_before;;
+}
+void Process::set_has_forked(bool state)
+{
+    has_Forked_before = state;
+}
+void Process::set_child_pointer(Process* p)
+{
+	child_pointr = p;
+
+}
+Process* Process::get_child_pointer()
+{
+    return child_pointr;
+}
 Queue<Process::io_request> Process::fill_IO_Requests(int io_request_number, int* io_durations, int* io_request_times) {
     Queue<Process::io_request> io_requests;
     for (int i = 0; i < io_request_number; i++) {

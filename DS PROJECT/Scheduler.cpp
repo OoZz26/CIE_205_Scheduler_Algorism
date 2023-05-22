@@ -75,14 +75,17 @@ void Scheduler::LoadData(string filename)
 			if (currenLine > 4 && currenLine <= NumofProcess + 4)
 			{
 
+
 				for (int i = 0; i < NumofProcess; i++)
 				{
+					
 					if (Myfile.eof())
 					{
 						break;
 					}
 					else
 					{
+						Queue<string> Pairs_of_io;
 						string x;
 						Myfile >> AT >> PID >> CT >> N;
 						if (N > 0)
@@ -149,29 +152,6 @@ void Scheduler::Dispaly_New_Process_List()
 	}
 
 
-}
-
-void Scheduler::Display_input_file_Data()
-{
-	cout << "noOf_FCFS is" << " " << noOf_FCFS << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "noOF_SJF is" << " " << noOF_SJF << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "noOF_RR is" << " " << noOF_RR << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "Timeslice is" << " " << Timeslice << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "RTF is" << " " << RTF << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "MaxW is" << " " << MaxW << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "STL is" << " " << STL << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "ForkPROB is" << " " << ForkPROB << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "NumofProcess is" << " " << NumofProcess << endl;
-	cout << "------------------------------------------------------" << endl;
-	cout << "noOf_Signal_Kill is" << " " << noOf_Signal_Kill << endl;
 }
 
 void Scheduler::Add_to_BLK(Process* p)
@@ -259,6 +239,73 @@ Processor* Scheduler::get_shortest_processor() {
 	return Processors_List[0];
 }
 
+Processor* Scheduler::get_shortest_FCFS()
+{
+	const int p_count = sizeof(Processors_List);
+
+	int* array_CTs = new int[noOf_FCFS];
+	for (int j = 0; j < p_count; j++)
+	{
+
+		if (Processors_List[j]->Processor_Type() == "FCFS_processor") {
+			for (int i = 0; i < noOf_FCFS; i++)
+			{
+
+				array_CTs[i] = Processors_List[i]->RDY_Duration();
+
+			}
+
+			int min = array_CTs[0];
+			for (int i = 0; i < noOf_FCFS; i++) {
+				if (array_CTs[i] < min) {
+					min = array_CTs[i];
+				}
+			}
+			for (int i = 0; i < noOf_FCFS; i++) {
+				if (Processors_List[i]->RDY_Duration() == min) {
+					return Processors_List[i];
+				}
+			}
+		}
+	}
+	
+	return nullptr;
+}
+
+
+
+Processor* Scheduler::get_longest_processor() {
+	const int p_count = sizeof(Processors_List);
+
+	int* array_CTs = new int[p_count];
+	int i = 0;
+
+
+	for (int i = 0; i < p_count; i++)
+	{
+
+		array_CTs[i] = Processors_List[i]->RDY_Duration();
+
+	}
+
+	int max = array_CTs[0];
+	for (int i = 0; i < p_count; i++) {
+		if (array_CTs[i] > max) {
+			max = array_CTs[i];
+		}
+	}
+	for (int i = 0; i < p_count; i++) {
+		if (Processors_List[i]->RDY_Duration() == max) {
+			return Processors_List[i];
+		}
+	}
+	return Processors_List[0];
+}
+
+
+
+
+
 void Scheduler::Simulate()
 {
 	UI* pUI = new UI();
@@ -285,20 +332,74 @@ void Scheduler::Simulate()
 			}
 		}
 
-		for (int i = 0; i < sizeof(Processors_List); i++)
-		{
-			Process* p = Processors_List[i]->get_run();
-			if (p)
-			{
+		work_Steal(t_Step); // work stealing function
 
-			}
 
-		}
+
+
+		
+		
 
 
 	}
+	
+
+}
+
+void Scheduler::Fork(int step, int forkprob , Processor* processor)
+{
+	srand(time(nullptr));
+	if (processor->Processor_Type() == "FCFS_processor" && processor->get_run() != NULL && processor->get_run()->get_has_forked() != true) { // to make sure that the processor is FCFS and has a run currently and its run hadn't forked before 
+		int random_number = rand() % 100;
+		if (random_number <= forkprob) {
+			// making a new process and add it to the shortestFCFS RDY list
+			int random_Forked_pid = 900 + (std::rand() % 1000); // new pid (should be random ) for forked 
+			Process* p = new Process(step, random_Forked_pid, processor->get_run()->get_remainnig_time(), 0); // setting new processs arguments 
+			processor->get_run()->set_child_pointer(p); // setting the child pointer of the parent process to the new forked process
+			processor->get_run()->set_has_forked(true); // setting the has forked to true
+			Processor* x = get_shortest_FCFS();
+			x->add_process(p);
+
+		}
+	}
+}
 
 
+
+	
+
+void Scheduler::work_Steal(int step)
+{
+
+	// work stealing starts here 
+	if (t_Step % STL == 0) { // every stl 
+		Processor* short_processor = get_shortest_processor();
+		Processor* long_processor = get_longest_processor();
+		// here the LQF must be for the most processor only not genaral same as sqf 
+		while (LQF(long_processor) != 0 && (((LQF(long_processor) - SQF(short_processor)) / LQF(long_processor)) * 100) > 40) // work stealing // what if infinite loop ?? 
+		{
+			Process* firstprocess = long_processor->get_fIrst_proces(); // here the get first function is with removal of the first element
+			short_processor->add_process(firstprocess); // adding to the ready of the shortest queueu
+			// removing the first element from run if it was
+			if (long_processor->get_run() == firstprocess) {
+				long_processor->set_run(nullptr);
+			}
+
+
+		}
+	}
+	//end of work stealing 
+
+}
+
+int Scheduler::LQF(Processor* p)
+{
+	return p->RDY_Duration();
+}
+
+int Scheduler::SQF(Processor* p)
+{
+	return p->RDY_Duration();
 }
 
 Scheduler::~Scheduler()

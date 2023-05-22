@@ -123,6 +123,11 @@ Process* RR_processor::get_run()
 	return run;
 }
 
+void RR_processor::set_run(Process* p)
+{
+	this->run = p;
+}
+
 void RR_processor::PrintReady()
 {
 	Node1<Process*>* R = RRqueue.GetFront();
@@ -148,4 +153,16 @@ int RR_processor::RDY_Duration()
 		R = R->getNext();
 	}
 	return cts;
+}
+
+Process* RR_processor::get_fIrst_proces()
+{
+	Process* p;
+	if (!RRqueue.IsEmpty()) {
+		RRqueue.Dequeue(p);
+		return p;
+	}
+	else {
+		return nullptr;
+	}
 }

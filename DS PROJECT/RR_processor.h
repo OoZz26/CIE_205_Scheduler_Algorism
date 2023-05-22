@@ -26,7 +26,9 @@ public:
 	Queue< Process*>  get_ready();
 	string Processor_Type() override;
 	Process* get_run() override;
+	void set_run(Process* p) override;
 	void PrintReady() override;
 	int RDY_Duration() override;
+	Process* get_fIrst_proces() override;
 };
 
