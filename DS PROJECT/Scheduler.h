@@ -71,6 +71,8 @@ public:
 	void RUN_TO_BLK();
 	void BLK_TO_RDY();
 	void incrementBLKcounters();
-
+	void Migrate_RR_to_SJF(Process* p);
+	void Migrate_FCFS_to_RR(Process* p, int MaxW);
+	void killOrphanProcesses(Queue<Processor>& processors);
 };
 

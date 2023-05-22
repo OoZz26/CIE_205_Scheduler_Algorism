@@ -525,6 +525,107 @@ Scheduler::~Scheduler()
 
 }
 
+
+
+void Scheduler::Migrate_RR_to_SJF(Process* p) {
+	int size = Processors_List.Count();
+	for (int i = 0; i < size; i++) {
+		Processor* proc = Processors_List.GetFront();
+		Processors_List.Dequeue();
+
+		//checks whether the current processor is SJF and whether it is currently idle
+		if (proc->Processor_Type() == "SJF_processor" && proc->IS_IDLE()) {
+			//checks whether the remaining execution time of process is <= to the RTF threshold
+			if (p->get_cpu_time() - p->get_remaining_time() <= RTF) {
+				// If so, migrate the process into the queue_processes of the SJF 
+				proc->add_process(p);
+				return;
+			}
+		}
+		Processors_List.Enqueue(proc);
+	}
+}
+
+void Scheduler::Migrate_FCFS_to_RR(Process* p, int MaxW) {
+
+	// checks whether the total wait time of process > MaxW threshhold
+	if (p->get_wait_time() > MaxW) {
+		int size = Processors_List.Count();
+		for (int i = 0; i < size; i++) {
+			Processor* proc = Processors_List.GetFront();
+			Processors_List.Dequeue();
+
+			//checks whether the current processor is RR and whether it is currently idle
+			if (proc->Processor_Type() == "RR_processor" && proc->IS_IDLE()) {
+				// If so, migrate the process into the queue_processes of the RR 
+				proc->add_process(p);
+				return;
+			}
+			Processors_List.Enqueue(proc);
+		}
+	}
+}
+
+
+
+void Scheduler::killOrphanProcesses(Queue<Processor>& processors) {
+	// Iterate through all FCFS processors
+	while (!processors.IsEmpty()) {
+		Processor* processor = processors.GetFront()->GetItemReference();
+		processors.Dequeue();
+		if (processor->Processor_Type() != "FCFS_processor") {
+			continue;
+		}
+
+		// Iterate through all processes in the processor's ready and running queues
+		Queue<Process*> readyQueue = processor->get_ready();
+		while (!readyQueue.IsEmpty()) {
+			Process* process = readyQueue.GetFront();
+			readyQueue.Dequeue();
+			if (process->isOrphan()) {
+				// Kill the orphan process and move it to the TRMlist
+				process->set_state(4); // Setstate to TERMINATED
+				processor->remove_process(process);
+				processor->addToTerminatedList(process);
+
+				// Kill all of its children and move them to the TRM list
+				Queue<Process*> children = process->getChildren();
+				while (!children.IsEmpty()) {
+					Process* child = children.GetFront();
+					children.Dequeue();
+					process->set_state(4); // Set state to TERMINATED
+					processor->remove_process(child);
+					processor->addToTerminatedList(child);
+				}
+			}
+		}
+
+		Queue<Process*> runningQueue = processor->getRunningQueue();
+		while (!runningQueue.IsEmpty()) {
+			Process* process = runningQueue.GetFront();
+			runningQueue.Dequeue();
+			if (process->isOrphan()) {
+				// Kill the orphan process and move it to the TRM list
+				process->set_state(4); // Set state to TERMINATED
+				processor->remove_process(process);
+				processor->addToTerminatedList(process);
+
+				// Kill all of its children and move them to the TRM list
+				Queue<Process*> children = process->getChildren();
+				while (!children.IsEmpty()) {
+					Process* child = children.GetFront();
+					children.Dequeue();
+					process->set_state(4); // Set state to TERMINATED
+					processor->remove_process(child);
+					processor->addToTerminatedList(child);
+				}
+			}
+		}
+		// Add the updated processor back to the queue
+		processors.Enqueue(*processor);
+	}
+}
+
 //void Scheduler::print(Queue<Process*> TRM_Process_List)
 //{
 //	ofstream output;
