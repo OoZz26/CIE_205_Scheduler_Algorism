@@ -20,7 +20,7 @@ private:
 public:
 	RR_processor(int id, Scheduler* s,int T_s);
 	void add_process(Process* p) override;
-	void remove_process(Process* p) override;
+	void remove_process(int id) override;
 	void ScheduleAlgo() override;
 	bool IS_IDLE() override;
 	Queue< Process*>  get_ready();

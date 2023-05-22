@@ -16,10 +16,44 @@ void FCFS_processor::add_process(Process* p)
 	FCFS_linked_list.InsertEnd(p);
 }
 
-void FCFS_processor::remove_process(Process* p)
+void FCFS_processor::remove_process(int id)
 {
-	counter--;
-	FCFS_linked_list.DeleteNode(p);
+
+	if (run->get_pid() == id) {
+		run->set_state(4);
+		run = nullptr;
+		return;
+	}
+	else {
+		Node<Process*>* F = FCFS_linked_list.GetHead();
+		Process* m = nullptr;
+		if (F->getItem()->get_pid() == id) {
+			m = FCFS_linked_list.Front();
+			FCFS_linked_list.DeleteFirst();
+			
+			m->set_state(4);
+			ss->Add_to_TRM(m);
+
+			return;
+		}
+		while (F->getNext()->getNext() != nullptr)
+		{
+			if (F->getNext()->getItem()->get_pid() == id) {
+				m = F->getNext()->getItem();
+				F->setNext(F->getNext()->getNext());
+				m->set_state(4);
+				ss->Add_to_TRM(m);
+				break;
+
+			}
+			F = F->getNext();
+		}
+	}
+	cout << endl;
+
+
+	/*counter--;
+	FCFS_linked_list.DeleteNode(p);*/
 }
 
 void FCFS_processor::ScheduleAlgo()

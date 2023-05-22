@@ -184,6 +184,31 @@ void Scheduler::Add_to_TRM(Process* p)
 
 }
 
+void Scheduler::KILLSIG()
+{
+	Node1<SIGKILL>* Sig = Signal_Kill_List.GetFront();
+	if (Signal_Kill_List.IsEmpty()) {
+		return;
+	}
+	else {
+		if (Sig->GetItem().ST == t_Step){
+			for (int i = 0;i < sizeof(Processors_List); i++) {
+				if (Processors_List[i]->Processor_Type() == "FCFS_processor") {
+					Processors_List[i]->remove_process(Sig->GetItem().SKPID);
+					
+				}
+				
+				
+			}
+			return;
+		}
+
+		else {
+			return;
+		}
+	}
+}
+
 Processor** Scheduler::GetProcessorList() const
 {
 	return Processors_List;

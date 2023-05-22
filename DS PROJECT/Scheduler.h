@@ -49,6 +49,7 @@ public:
 	void Display_input_file_Data();
 	void Add_to_BLK(Process* p);
 	void Add_to_TRM(Process* p);
+	void KILLSIG();
 	Processor** GetProcessorList() const;
 	Queue<Process*> GetBLKList()const;
 	Queue<Process*> GetTRMList() const;

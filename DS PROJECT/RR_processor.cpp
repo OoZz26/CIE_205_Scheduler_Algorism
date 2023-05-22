@@ -26,9 +26,9 @@ void RR_processor::add_process(Process* p)
 
 }
 
-void RR_processor::remove_process(Process* p)
+void RR_processor::remove_process(int id)
 {
-
+	
 
 }
 

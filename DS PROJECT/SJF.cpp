@@ -15,9 +15,8 @@ void SJF_processor::add_process(Process* p)
 	SJF_Pqueue.enqueue(p);
 	counter++;
 } 
-void SJF_processor::remove_process(Process* p)
+void SJF_processor::remove_process(int id )
 {
-	counter--;
 }
 void SJF_processor::ScheduleAlgo()
 
@@ -29,7 +28,6 @@ void SJF_processor::ScheduleAlgo()
 	}
 	if (!SJF_Pqueue.IsEmpty() && IS_IDLE()) {
 		SJF_Pqueue.dequeue(run);
-		remove_process(run);
 		run->set_state(2);
 		cout << counter << endl;
 		return;

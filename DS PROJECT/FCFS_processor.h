@@ -17,7 +17,7 @@ public:
 	FCFS_processor(int id, Scheduler* s);
 
 	void add_process(Process* p) override;
-	void remove_process(Process* p) override;
+	void remove_process(int id) override;
 	void ScheduleAlgo() override;
 	bool IS_IDLE() override;
 	int get_counter() const;

@@ -1,4 +1,5 @@
 #pragma once
+#include "../Process/Process.h"
 #include<iostream>
 using namespace std;
 //First let's declare a single node in the list
@@ -79,7 +80,10 @@ public:
 
 
 	Node<T>* GetHead() {
-		return Head;
+		if (Head)
+			return Head;
+		else
+			throw;
 	}
 	bool ISEMPTY() {
 		if (Head == nullptr) {
@@ -292,6 +296,56 @@ public:
 		return F;
 
 	}
+
+
+	//bool DeleteNode(int id,Process* &p)
+	//{
+
+
+	//	int found = 0;
+	//	bool F = false;
+	//	Node<Process*>* Temp = Head;
+	//	while (Temp != NULL)
+	//	{
+	//		if (Temp->getItem()->get_pid() == id)
+	//		{
+	//			found += 1;
+
+	//		}
+
+	//		Temp = Temp->getNext();
+
+	//	}
+	//	if (found != 0)
+	//	{
+	//		Node<Process*>* delptr = new Process*();
+	//		if (Head->getItem()->get_pid() == id)
+	//		{
+	//			delptr = Head;
+	//			Head = Head->getNext();
+	//			p= delptr
+	//			delete delptr;
+	//		}
+	//		else
+	//		{
+	//			delptr = Head;
+	//			Node<T>* prev = NULL;
+	//			while (delptr->getItem()->get_pid() != id)
+	//			{
+	//				prev = delptr;
+	//				delptr = delptr->getNext();
+	//			}
+	//			prev->setNext(delptr->getNext());
+	//			p= delptr;
+	//			delete delptr;
+	//		}
+	//		F = true;
+	//	}
+	//	count--;
+
+	//	return F;
+
+	//}
 
 	//[7] DeleteNodes
 	//deletes ALL node with the given value (if found) and returns true
