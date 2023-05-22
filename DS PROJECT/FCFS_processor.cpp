@@ -169,12 +169,10 @@ void FCFS_processor::ScheduleAlgo()
 bool FCFS_processor::IS_IDLE()
 {
 	if (run) {
-		cout << "false i" << endl;
 		return false;
 
 	}
 	else {
-		cout << "true i" << endl;
 		return true;
 	}
 }
