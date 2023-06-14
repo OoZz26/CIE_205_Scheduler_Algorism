@@ -44,10 +44,15 @@ During the implementation of this project, we have taken the following considera
 
 To use this project, follow these steps:
 
-1. Clone the repository: git clone https://github.com/OoZz26/CIE_205_Scheduler_Algorithm
-2. Navigate to the project directory: cd process-scheduler
-3. Compile the source code: gcc -o process-scheduler main.c
-4. Run the program: ./process-scheduler
+1. Clone the repository: `git clone https://github.com/OoZz26/CIE_205_Scheduler_Algorithm.git`
+2. Navigate to the project directory: `cd CIE_205_Scheduler_Algorithm`
+3. Compile the source code: `gcc -o process-scheduler main.c`
+4. Run the program: `./process-scheduler`
+
+You can find the project repository [here](https://github.com/OoZz26/CIE_205_Scheduler_Algorithm).
+
+Please ensure you have the necessary dependencies and a compatible C compiler installed before compiling and running the program.
+
 
 ## Contributing
 
