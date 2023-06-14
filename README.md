@@ -10,7 +10,7 @@ We have implemented all the necessary data structures and their corresponding fu
 
 1. Queue
 2. Priority Queue
-3 .Linked List
+3. Linked List
 4. Queues of Struct
 
 We have also implemented the following scheduling algorithms:
