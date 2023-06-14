@@ -1,8 +1,8 @@
-#Process Scheduler
+# Process Scheduler
 
 This project, "Process Scheduler," is associated with the Data Structures and Algorithm Analysis course at Zewail City University of Science and Technology. The main objectives of scheduling are to optimize the use of resources, keep the CPU as busy as possible, have maximum utilization of the CPU, minimize response time and waiting time for processes being scheduled, and ensure load balancing among different processors in multiprocessor systems.
 
-##Overview
+## Overview
 
 The purpose of this project is to develop a program that simulates the operation of the process scheduler in a multiprocessor system. Additionally, the program calculates relevant statistics to help improve the overall scheduling system.
 
@@ -19,7 +19,7 @@ We have also implemented the following scheduling algorithms:
 2. Shortest Job First (SJF)
 3. Round Robin (RR)
 
-##Process Scheduling Criteria and Flow
+## Process Scheduling Criteria and Flow
 
 To ensure comprehensive functionality, we have implemented the following process scheduling criteria and flow:
 
@@ -32,7 +32,7 @@ To ensure comprehensive functionality, we have implemented the following process
 7. Process Completion
 8. Reading Input from File
 
-##Considerations
+## Considerations
 
 During the implementation of this project, we have taken the following considerations into account:
 
@@ -40,7 +40,7 @@ During the implementation of this project, we have taken the following considera
 2. Object-Oriented Concepts (Modularity, Maintainability, and Class Responsibilities)
 3. Optimal Performance through the Best Data Structures
 
-##Getting Started
+## Getting Started
 
 To use this project, follow these steps:
 
@@ -49,7 +49,7 @@ To use this project, follow these steps:
 3. Compile the source code: gcc -o process-scheduler main.c
 4. Run the program: ./process-scheduler
 
-##Contributing
+## Contributing
 
 We welcome contributions from the community to enhance the functionality of the Process Scheduler project. If you wish to contribute, please follow these steps:
 
@@ -61,7 +61,7 @@ We welcome contributions from the community to enhance the functionality of the 
 Please ensure your contributions adhere to the coding standards and conventions followed in this project.
 
 
-##Contact
+## Contact
 If you have any questions, suggestions, or concerns regarding this project, please feel free to contact us:
 
 - Adham Saad: s-adham.saad@zewailcity.edu.eg
